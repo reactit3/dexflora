@@ -36,9 +36,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dm_sans.variable} ${poppins.variable} antialiased`}>
-        <div className="flex flex-col w-full h-screen max-w-[1284px] mx-auto overflow-hidden">
+        <div className=" max-w-[1284px] mx-auto overflow-hidden">
           <Header />
-          <div className="flex-1 overflow-y-auto">{children}</div>
+          <div className="overflow-y-auto mt-[75px]">{children}</div>
         </div>
       </body>
     </html>

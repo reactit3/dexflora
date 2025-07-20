@@ -142,7 +142,7 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <>
+    <div className="bg-white fixed top-0 left-0 right-0 z-100">
       <header className="px-4 py-3 w-full flex items-center justify-between">
         {/* Logo */}
         <h3 className="font-poppins text-[22px] tracking-[2px] text-brand">
@@ -260,6 +260,6 @@ export function Header() {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
