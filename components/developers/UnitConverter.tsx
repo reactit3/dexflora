@@ -121,9 +121,6 @@ export function UnitConverter() {
               Unit Converter
             </h1>
           </div>
-          <p className="text-[16px] sm:" style={{ color: "#8e8e93" }}>
-            Convert between different Wei units used in Ethereum development
-          </p>
         </div>
 
         {/* Main Converter */}
@@ -410,14 +407,6 @@ export function UnitConverter() {
               </tbody>
             </table>
           </div>
-        </div>
-
-        {/* Footer Info */}
-        <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
-          <p>
-            Perfect for Ethereum developers working with smart contracts and gas
-            calculations
-          </p>
         </div>
       </div>
     </div>

@@ -220,9 +220,11 @@ export function Header() {
                   const isActive = isTouched || isCurrentPath;
 
                   return (
-                    <div
+                    <Link
+                      href={item.href}
                       key={itemKey}
-                      onClick={() => handleTouch(itemKey)}
+                      // onClick={() => handleTouch(itemKey)}
+                      onClick={handleLinkClick}
                       className={`rounded-2xl p-2 flex items-center gap-4 transition-all duration-150 ease-in-out cursor-pointer ${
                         isActive ? "bg-light" : "bg-transparent"
                       }`}
@@ -235,7 +237,7 @@ export function Header() {
                         {item.icon}
                       </div>
 
-                      <Link href={item.href} onClick={handleLinkClick}>
+                      <div>
                         <div className="font-medium">
                           <div className="flex items-center gap-2">
                             <p className="text-[16px]">{item.title}</p>
@@ -251,8 +253,8 @@ export function Header() {
                             </p>
                           )}
                         </div>
-                      </Link>
-                    </div>
+                      </div>
+                    </Link>
                   );
                 })}
               </div>
