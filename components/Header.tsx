@@ -1,16 +1,36 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DedicatedNodesIcon, RpcServiceIcon } from "./Icons";
 
 export function Header() {
   const navLinks = ["Documentation", "Developers", "Exlorers"];
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isTapped, setIsTapped] = useState(false);
+  const [touched, setTouched] = useState(false);
+
+  const touchRef = useRef<HTMLDivElement>(null);
 
   const handleTouch = () => {
-    setIsTapped(true);
-    setTimeout(() => setIsTapped(false), 150);
+    setTouched((prev) => !prev);
   };
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
+      if (
+        touchRef.current &&
+        !touchRef.current.contains(event.target as Node)
+      ) {
+        setTouched(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -64,9 +84,9 @@ export function Header() {
       </header>
 
       {isOpen && (
-        <div className="absolute top-[75px] left-0 w-full px-4 sm:px-10 ">
+        <div className="absolute top-[75px] left-0 w-full px-4 sm:px-10">
           <div className="grid sm:grid-cols-2 items-center gap-3 sm:gap-2 text-[16px] font-medium mt-4">
-            <button className=" p-4 bg-[#ebf3ff] text-[#0b57d0] text-center transition-all ease-in-out active:bg-[#D6E6FF] rounded-xl cursor-pointer">
+            <button className="p-4 bg-[#ebf3ff] text-[#0b57d0] text-center transition-all ease-in-out active:bg-[#D6E6FF] rounded-xl cursor-pointer">
               Contact
             </button>
             <button className="justify-center p-4 bg-brand active:bg-[#2062E5] text-white rounded-xl flex items-center gap-2 transition-all ease-in-out cursor-pointer">
@@ -78,20 +98,29 @@ export function Header() {
           <div className="mt-8">
             <h3 className="text-[18px] font-bold">Developers</h3>
 
-            <div className="mt-12 cursor-pointer rounded-2xl p-2 flex items-center gap-4 group active:bg-light transition-all duration-150 ease-in-out">
-              <div className="w-13 h-13 bg-[#ebf3ff]  group-active:bg-[#2062E5] rounded-2xl flex items-center justify-center transition-all duration-150 ease-in-out cursor-pointer active:scale-90 text-[#2772F5] group-active:text-white">
+            <div
+              ref={touchRef}
+              onClick={handleTouch}
+              className={`mt-12 rounded-2xl p-2 flex items-center gap-4 transition-all duration-150 ease-in-out cursor-pointer ${
+                touched ? "bg-light" : "bg-transparent"
+              }`}
+            >
+              <div
+                className={`w-13 h-13 rounded-2xl flex items-center justify-center transition-all duration-150 ease-in-out text-[#2772F5] ${
+                  touched ? "bg-[#2062E5] text-white" : "bg-[#ebf3ff]"
+                }`}
+              >
                 <DedicatedNodesIcon />
               </div>
 
               <div className="font-medium">
                 <div className="flex items-center gap-2">
                   <p className="text-[16px]">Low Level Interactions</p>
-
                   <span className="text-[10px] bg-[#FFF4E6] text-[#FF9500] px-2 rounded-xl">
                     Beta
                   </span>
                 </div>
-                <p className="text-[12px]  text-[#8e8e93]">
+                <p className="text-[12px] text-[#8e8e93]">
                   Private-based nodes
                 </p>
               </div>
