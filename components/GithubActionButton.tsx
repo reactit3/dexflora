@@ -1,33 +1,21 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { GithubIcon, StarIcon, ForkIcon } from "./Icons";
+import { useGitHubStats } from "@/store/githhubStats";
 
 interface GithubButtonProps {
   className?: string;
 }
 
 export function GithubButton({ className = "" }: GithubButtonProps) {
-  const [stars, setStars] = useState<number | null>(null);
-  const [forks, setForks] = useState<number | null>(null);
+  const { stats, setStats } = useGitHubStats();
 
   useEffect(() => {
-    const fetchRepoStats = async () => {
-      try {
-        const res = await fetch(
-          "https://api.github.com/repos/bnb-chain/bnb-chain.github.io"
-        );
-        if (!res.ok) throw new Error("Failed to fetch repo data");
-        const data = await res.json();
-        setStars(data.stargazers_count);
-        setForks(data.forks_count);
-      } catch (error) {
-        console.error("Error fetching GitHub stats:", error);
-      }
-    };
-
-    fetchRepoStats();
-  }, []);
+    if (!stats) {
+      fetch("/api/github-stats")
+        .then((res) => res.json())
+        .then((data) => setStats(data));
+    }
+  }, [stats, setStats]);
 
   const formatCount = (count: number | null) => {
     if (count === null) return "--";
@@ -50,11 +38,19 @@ export function GithubButton({ className = "" }: GithubButtonProps) {
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           <StarIcon />
-          <span className="text-sm">{formatCount(stars)}</span>
+          {stats ? (
+            <span className="text-sm">{formatCount(stats.stars)}</span>
+          ) : (
+            <div className="w-6 h-4 bg-gray-300 rounded animate-pulse" />
+          )}
         </div>
         <div className="flex items-center gap-1">
           <ForkIcon />
-          <span className="text-sm">{formatCount(forks)}</span>
+          {stats ? (
+            <span className="text-sm">{formatCount(stats.forks)}</span>
+          ) : (
+            <div className="w-6 h-4 bg-gray-300 rounded animate-pulse" />
+          )}
         </div>
       </div>
     </a>

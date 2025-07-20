@@ -2,14 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import {
-  AppChainIcon,
-  DedicatedNodesIcon,
-  ForkIcon,
-  GithubIcon,
-  RpcServiceIcon,
-  StarIcon,
-} from "./Icons";
+import { AppChainIcon, DedicatedNodesIcon, RpcServiceIcon } from "./Icons";
 import { GithubButton } from "./GithubActionButton";
 
 // TypeScript interfaces
