@@ -2,7 +2,15 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { AppChainIcon, DedicatedNodesIcon, RpcServiceIcon } from "./Icons";
+import {
+  AppChainIcon,
+  DedicatedNodesIcon,
+  ForkIcon,
+  GithubIcon,
+  RpcServiceIcon,
+  StarIcon,
+} from "./Icons";
+import { GithubButton } from "./GithubActionButton";
 
 // TypeScript interfaces
 interface NavItem {
@@ -196,9 +204,7 @@ export function Header() {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-2 text-[16px] font-medium max-md:hidden">
-          <button className="px-4 py-2 bg-[#ebf3ff] text-[#0b57d0] transition-all ease-in-out hover:bg-[#D6E6FF] rounded-xl cursor-pointer">
-            Contact
-          </button>
+          <GithubButton />
           <button className="px-4 bg-brand hover:bg-[#2062E5] text-white py-2 rounded-xl flex items-center gap-2 transition-all ease-in-out cursor-pointer">
             <span>Dashboard</span>
             <img src="/assets/icons/cursor-click.svg" alt="Cursor Click" />
@@ -230,9 +236,7 @@ export function Header() {
           className="absolute z-50 bg-white pb-50 top-[75px] left-0 w-full px-4 sm:px-10 h-screen overflow-y-auto sm:hidden"
         >
           <div className="grid sm:grid-cols-2 items-center gap-3 sm:gap-2 text-[16px] font-medium mt-4">
-            <button className="p-4 bg-[#ebf3ff] text-[#0b57d0] text-center transition-all ease-in-out active:bg-[#D6E6FF] rounded-xl cursor-pointer">
-              Contact
-            </button>
+            <GithubButton className="justify-center w-full py-4" />
             <button className="justify-center p-4 bg-brand active:bg-[#2062E5] text-white rounded-xl flex items-center gap-2 transition-all ease-in-out cursor-pointer">
               <span>Dashboard</span>
               <img src="/assets/icons/cursor-click.svg" alt="Cursor Click" />
