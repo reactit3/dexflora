@@ -195,7 +195,7 @@ export function Header() {
       {isOpen && (
         <div
           ref={menuRef}
-          className="absolute z-50 bg-white pb-24 top-[75px] left-0 w-full px-4 sm:px-10 h-screen overflow-y-auto sm:hidden"
+          className="absolute z-50 bg-white pb-50 top-[75px] left-0 w-full px-4 sm:px-10 h-screen overflow-y-auto sm:hidden"
         >
           <div className="grid sm:grid-cols-2 items-center gap-3 sm:gap-2 text-[16px] font-medium mt-4">
             <button className="p-4 bg-[#ebf3ff] text-[#0b57d0] text-center transition-all ease-in-out active:bg-[#D6E6FF] rounded-xl cursor-pointer">
