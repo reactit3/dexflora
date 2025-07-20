@@ -5,6 +5,7 @@ import { Copy, ExternalLink, Zap, AlertCircle } from "lucide-react";
 interface Provider {
   id: string;
   name: string;
+  url: string;
 }
 
 interface CreatedApp {
@@ -26,6 +27,7 @@ export function LowLevel() {
     {
       id: "surge",
       name: "Surge",
+      url: "surge.sh",
     },
   ];
 
