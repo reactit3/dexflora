@@ -5,9 +5,6 @@ import { Copy, ExternalLink, Zap, AlertCircle } from "lucide-react";
 interface Provider {
   id: string;
   name: string;
-  description: string;
-  icon: string;
-  url: string;
 }
 
 interface CreatedApp {
@@ -29,9 +26,6 @@ export function LowLevel() {
     {
       id: "surge",
       name: "Surge",
-      description: "Fast and reliable deployment",
-      icon: "⚡",
-      url: "surge.sh",
     },
   ];
 
@@ -182,52 +176,52 @@ export function LowLevel() {
             >
               Choose URL Provider
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {providers.map((provider: Provider) => (
-                <div
-                  key={provider.id}
-                  onClick={() => setSelectedProvider(provider.id)}
-                  className={`p-4 border-2 rounded-xl cursor-pointer transition-all duration-150 active:scale-95 ${
-                    selectedProvider === provider.id
-                      ? "border-blue-500"
-                      : "border-gray-200"
-                  }`}
-                  style={{
-                    backgroundColor:
-                      selectedProvider === provider.id ? "#ebf3ff" : "white",
-                    borderColor:
-                      selectedProvider === provider.id
-                        ? "var(--color-brand)"
-                        : "#e5e5e7",
-                  }}
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-xl">{provider.icon}</span>
-                    <div>
-                      <h3
-                        className="font-medium"
-                        style={{ color: "var(--color-dark)" }}
-                      >
-                        {provider.name}
-                      </h3>
-                      <p className="text-xs" style={{ color: "#8e8e93" }}>
-                        {provider.url}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-sm" style={{ color: "#8e8e93" }}>
-                    {provider.description}
-                  </p>
-                </div>
+            <select
+              value={selectedProvider}
+              onChange={(e) => setSelectedProvider(e.target.value)}
+              className="w-full p-3 border rounded-xl outline-none transition-all duration-150"
+              style={{
+                borderColor: "#e5e5e7",
+                color: "var(--color-dark)",
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "var(--color-brand)";
+                e.target.style.boxShadow = "0 0 0 2px rgba(39, 114, 245, 0.1)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "#e5e5e7";
+                e.target.style.boxShadow = "none";
+              }}
+            >
+              {providers.map((provider) => (
+                <option key={provider.id} value={provider.id}>
+                  {provider.name}
+                </option>
               ))}
-            </div>
+            </select>
           </div>
 
           {/* Create Button */}
           <button
             onClick={handleCreateDapp}
             disabled={isCreating || !hexInput.trim() || !validateHex(hexInput)}
-            className="w-full p-4 bg-brand hover:bg-[#2062E5] disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-150 cursor-pointer active:scale-95 text-[16px] font-medium"
+            className="w-full p-4 text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-150 cursor-pointer active:scale-95 text-[16px] font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              backgroundColor:
+                isCreating || !hexInput.trim() || !validateHex(hexInput)
+                  ? "#8e8e93"
+                  : "var(--color-brand)",
+            }}
+            onMouseEnter={(e) => {
+              if (!isCreating && hexInput.trim() && validateHex(hexInput)) {
+                e.currentTarget.style.backgroundColor = "#2062E5";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isCreating && hexInput.trim() && validateHex(hexInput)) {
+                e.currentTarget.style.backgroundColor = "var(--color-brand)";
+              }
+            }}
           >
             {isCreating ? (
               <>

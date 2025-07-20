@@ -318,7 +318,6 @@ export function UnitConverter() {
                     backgroundColor: "var(--color-light)",
                     borderColor: "#e5e5e7",
                     color: "var(--color-dark)",
-                    fontFamily: "monospace",
                   }}
                 />
                 {result && (
