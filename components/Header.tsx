@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { DedicatedNodesIcon, RpcServiceIcon } from "./Icons";
+import { AppChainIcon, DedicatedNodesIcon, RpcServiceIcon } from "./Icons";
 
 // TypeScript interfaces
 interface NavItem {
@@ -27,6 +27,83 @@ export function Header() {
   // Single array containing all navigation sections
   const navSections: NavSection[] = [
     {
+      title: "Documentation",
+      items: [
+        {
+          icon: <RpcServiceIcon />,
+          title: "Getting Started",
+          subtitle: "Quick start guide",
+          href: "/docs/getting-started",
+        },
+      ],
+    },
+    {
+      title: "Explorers",
+      items: [
+        {
+          icon: <AppChainIcon />,
+          title: "BscScan",
+          subtitle: "Build custom blockchain",
+          href: "https://bscscan.com/",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "OKLink (BNB Chain Explorer)",
+          subtitle: "Build custom blockchain",
+          href: "https://www.oklink.com/bsc",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "Bitquery Explorer",
+          subtitle: "Build custom blockchain",
+          href: "https://explorer.bitquery.io/bsc",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "DexGuru",
+          subtitle: "Build custom blockchain",
+          href: "https://dex.guru/",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "Bloxy Explorer",
+          subtitle: "Build custom blockchain",
+          href: "https://bloxy.info/",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "BSC Trace",
+          subtitle: "Build custom blockchain",
+          href: "https://bsctrace.com/",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "Tokenview (BNB Chain Explorer)",
+          subtitle: "Build custom blockchain",
+          href: "https://bsc.tokenview.io/",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "Blockchair (BNB Smart Chain)",
+          subtitle: "Build custom blockchain",
+          href: "https://blockchair.com/binance-smart-chain",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "BscScan Testnet",
+          subtitle: "Build custom blockchain",
+          href: "https://testnet.bscscan.com/",
+        },
+        {
+          icon: <AppChainIcon />,
+          title: "AtomScan (BSC)",
+          subtitle: "Build custom blockchain",
+          href: "https://atoms.xyz/bsc",
+        },
+      ],
+    },
+
+    {
       title: "Developers",
       items: [
         {
@@ -43,21 +120,6 @@ export function Header() {
           href: "/developers/unit-converter",
         },
       ],
-    },
-    {
-      title: "Documentation",
-      items: [
-        {
-          icon: <RpcServiceIcon />,
-          title: "Getting Started",
-          subtitle: "Quick start guide",
-          href: "/docs/getting-started",
-        },
-      ],
-    },
-    {
-      title: "Explorers",
-      items: [],
     },
   ];
 
@@ -113,9 +175,11 @@ export function Header() {
     <div className="bg-white fixed top-0 left-0 right-0 z-100">
       <header className="px-4 py-3 w-full flex items-center justify-between">
         {/* Logo */}
-        <h3 className="font-poppins text-[22px] tracking-[2px] text-brand">
-          DEXFLORA
-        </h3>
+        <Link href="/">
+          <h3 className="font-poppins text-[22px] tracking-[2px] text-brand">
+            DEXFLORA
+          </h3>
+        </Link>
 
         {/* Navigation */}
         <ul className="text-[14px] font-medium flex items-center space-x-2 max-md:hidden">
@@ -186,9 +250,10 @@ export function Header() {
                   const isTouched = activeIndex === itemKey;
                   const isCurrentPath = pathname === item.href;
                   const isActive = isTouched || isCurrentPath;
+                  const isExplorer = section.title === "Explorers";
 
                   return (
-                    <Link
+                    <a
                       href={item.href}
                       key={itemKey}
                       // onClick={() => handleTouch(itemKey)}
@@ -196,6 +261,8 @@ export function Header() {
                       className={`rounded-2xl p-2 flex items-center gap-4 transition-all duration-150 ease-in-out cursor-pointer ${
                         isActive ? "bg-light" : "bg-transparent"
                       }`}
+                      target={isExplorer ? "_blank" : "_self"}
+                      rel={isExplorer ? "noopener noreferrer" : undefined}
                     >
                       <div
                         className={`w-13 h-13 rounded-2xl flex items-center justify-center transition-all duration-150 ease-in-out text-[#2772F5] ${
@@ -222,7 +289,7 @@ export function Header() {
                           )}
                         </div>
                       </div>
-                    </Link>
+                    </a>
                   );
                 })}
               </div>
