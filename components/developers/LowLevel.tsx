@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Copy, ExternalLink, Zap, AlertCircle } from "lucide-react";
+import { getFirstLinkAndDelete } from "@/app/actions/links";
 
 interface Provider {
   id: string;
@@ -22,12 +23,12 @@ export function LowLevel() {
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [createdApp, setCreatedApp] = useState<CreatedApp | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const providers: Provider[] = [
     {
       id: "surge",
       name: "Surge",
-
       url: "surge.sh",
     },
   ];
@@ -49,26 +50,46 @@ export function LowLevel() {
     }
 
     setIsCreating(true);
+    setError(null);
+    setCreatedApp(null);
 
-    setTimeout(() => {
+    try {
+      // Call the server action
+      const result = await getFirstLinkAndDelete();
+
+      if (result.error || !result.data) {
+        setError(result.error || "Failed to get link");
+        setIsCreating(false);
+        return;
+      }
+
+      const link = result.data;
       const selectedProviderData = providers.find(
         (p) => p.id === selectedProvider
       );
-      if (!selectedProviderData) return;
 
-      const mockApp: CreatedApp = {
-        id: Math.random().toString(36).substr(2, 9),
-        url: `https://dapp-${Math.random().toString(36).substr(2, 6)}.${
-          selectedProviderData.url
-        }`,
+      if (!selectedProviderData) {
+        setError("Provider not found");
+        setIsCreating(false);
+        return;
+      }
+
+      // Create the app object using the real link data
+      const newApp: CreatedApp = {
+        id: link.name, // Use the link name as the dApp ID
+        url: link.url, // Use the actual URL from the database
         provider: selectedProviderData,
         deployedAt: new Date().toISOString(),
         hexData: hexInput,
       };
 
-      setCreatedApp(mockApp);
+      setCreatedApp(newApp);
+    } catch (err) {
+      setError("Failed to create dApp");
+      console.error("Error creating dApp:", err);
+    } finally {
       setIsCreating(false);
-    }, 2000);
+    }
   };
 
   const handleCopy = async (text: string): Promise<void> => {
@@ -95,6 +116,16 @@ export function LowLevel() {
           </p>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 border border-red-200 rounded-xl bg-red-50">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-500" />
+              <span className="text-red-700 font-medium">{error}</span>
+            </div>
+          </div>
+        )}
+
         {/* Main Form */}
         <div
           className="border rounded-2xl p-6 shadow-sm"
@@ -104,9 +135,9 @@ export function LowLevel() {
           }}
         >
           {/* Grid Layout for larger screens */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Hex Input Section */}
-            <div className="space-y-4">
+            <div className="space-y-4 h-full flex flex-col">
               <label
                 className="block text-[16px] font-medium"
                 style={{ color: "var(--color-dark)" }}
@@ -115,54 +146,37 @@ export function LowLevel() {
               </label>
               <textarea
                 value={hexInput}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  setHexInput(e.target.value)
-                }
-                placeholder="Paste your hex data here (e.g., 0xa9059cbb000000000000000000000000...)"
-                rows={8}
-                className="w-full p-4 text-sm border rounded-xl outline-none transition-all duration-150 font-mono"
+                onChange={(e) => setHexInput(e.target.value)}
+                placeholder="Paste your hex data here (e.g., 0xa9059cbb...)"
+                className="w-full flex-1 p-4 text-sm border rounded-xl outline-none transition-all duration-150 font-mono resize-none"
                 style={{
                   borderColor: "#e5e5e7",
                   color: "var(--color-dark)",
-                  resize: "vertical",
                 }}
-                onFocus={(e: React.FocusEvent<HTMLTextAreaElement>) => {
+                onFocus={(e) => {
                   e.target.style.borderColor = "var(--color-brand)";
                   e.target.style.boxShadow =
                     "0 0 0 2px rgba(39, 114, 245, 0.1)";
                 }}
-                onBlur={(e: React.FocusEvent<HTMLTextAreaElement>) => {
+                onBlur={(e) => {
                   e.target.style.borderColor = "#e5e5e7";
                   e.target.style.boxShadow = "none";
                 }}
               />
-
-              {/* Validation indicator */}
+              {/* Validation Indicator */}
               {hexInput && (
                 <div className="flex items-center gap-2">
                   {validateHex(hexInput) ? (
                     <>
-                      <div
-                        className="w-4 h-4 rounded-full"
-                        style={{ backgroundColor: "#34C759" }}
-                      ></div>
-                      <span
-                        className="text-sm font-medium"
-                        style={{ color: "#34C759" }}
-                      >
+                      <div className="w-4 h-4 rounded-full bg-[#34C759]"></div>
+                      <span className="text-sm font-medium text-[#34C759]">
                         Valid hex input
                       </span>
                     </>
                   ) : (
                     <>
-                      <AlertCircle
-                        className="w-4 h-4"
-                        style={{ color: "#FF3B30" }}
-                      />
-                      <span
-                        className="text-sm font-medium"
-                        style={{ color: "#FF3B30" }}
-                      >
+                      <AlertCircle className="w-4 h-4 text-[#FF3B30]" />
+                      <span className="text-sm font-medium text-[#FF3B30]">
                         Invalid hex format
                       </span>
                     </>
@@ -203,7 +217,7 @@ export function LowLevel() {
                 >
                   {providers.map((provider: Provider) => (
                     <option key={provider.id} value={provider.id}>
-                     {provider.name}
+                      {provider.name}
                     </option>
                   ))}
                 </select>
@@ -230,7 +244,7 @@ export function LowLevel() {
                 )}
               </button>
 
-              {/* Created App Result - Now in the second column */}
+              {/* Created App Result */}
               {createdApp && (
                 <div
                   className="border rounded-2xl p-6 shadow-sm"
