@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { DedicatedNodesIcon, RpcServiceIcon } from "./Icons";
 
@@ -21,6 +22,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   // Single array containing all navigation sections
   const navSections: NavSection[] = [
@@ -101,6 +103,25 @@ export function Header() {
     setActiveIndex(null);
   };
 
+  // Function to handle touch/click on items
+  const handleTouch = (itemKey: string) => {
+    setActiveIndex((prev) => (prev === itemKey ? null : itemKey));
+  };
+
+  // Control body overflow when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup function to reset overflow when component unmounts
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   // Detect outside clicks to reset activeIndex
   useEffect(() => {
     function handleClickOutside(event: MouseEvent | TouchEvent) {
@@ -122,7 +143,7 @@ export function Header() {
 
   return (
     <>
-      <header className="px-4 py-3 max-w-[1284px] mx-auto flex items-center justify-between">
+      <header className="px-4 py-3 w-full flex items-center justify-between">
         {/* Logo */}
         <h3 className="font-poppins text-[22px] tracking-[2px] text-brand">
           DEXFLORA
@@ -174,7 +195,7 @@ export function Header() {
       {isOpen && (
         <div
           ref={menuRef}
-          className="absolute bg-white top-[75px] left-0 w-full px-4 sm:px-10  h-screen overflow-y-auto sm:hidden"
+          className="absolute z-50 bg-white pb-24 top-[75px] left-0 w-full px-4 sm:px-10 h-screen overflow-y-auto sm:hidden"
         >
           <div className="grid sm:grid-cols-2 items-center gap-3 sm:gap-2 text-[16px] font-medium mt-4">
             <button className="p-4 bg-[#ebf3ff] text-[#0b57d0] text-center transition-all ease-in-out active:bg-[#D6E6FF] rounded-xl cursor-pointer">
@@ -194,34 +215,27 @@ export function Header() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {section.items.map((item, itemIndex) => {
                   const itemKey = createItemKey(sectionIndex, itemIndex);
+                  const isTouched = activeIndex === itemKey;
+                  const isCurrentPath = pathname === item.href;
+                  const isActive = isTouched || isCurrentPath;
+
                   return (
-                    <Link
+                    <div
                       key={itemKey}
-                      href={item.href}
-                      onClick={handleLinkClick}
+                      onClick={() => handleTouch(itemKey)}
+                      className={`rounded-2xl p-2 flex items-center gap-4 transition-all duration-150 ease-in-out cursor-pointer ${
+                        isActive ? "bg-light" : "bg-transparent"
+                      }`}
                     >
                       <div
-                        onClick={() =>
-                          setActiveIndex((prev) =>
-                            prev === itemKey ? null : itemKey
-                          )
-                        }
-                        className={`rounded-2xl p-2 flex items-center gap-4 transition-all duration-150 ease-in-out cursor-pointer ${
-                          activeIndex === itemKey
-                            ? "bg-light"
-                            : "bg-transparent"
+                        className={`w-13 h-13 rounded-2xl flex items-center justify-center transition-all duration-150 ease-in-out text-[#2772F5] ${
+                          isActive ? "bg-[#2062E5] text-white" : "bg-[#ebf3ff]"
                         }`}
                       >
-                        <div
-                          className={`w-13 h-13 rounded-2xl flex items-center justify-center transition-all duration-150 ease-in-out text-[#2772F5] ${
-                            activeIndex === itemKey
-                              ? "bg-[#2062E5] text-white"
-                              : "bg-[#ebf3ff]"
-                          }`}
-                        >
-                          {item.icon}
-                        </div>
+                        {item.icon}
+                      </div>
 
+                      <Link href={item.href} onClick={handleLinkClick}>
                         <div className="font-medium">
                           <div className="flex items-center gap-2">
                             <p className="text-[16px]">{item.title}</p>
@@ -237,8 +251,8 @@ export function Header() {
                             </p>
                           )}
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </div>
                   );
                 })}
               </div>
