@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Poppins } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 const dm_sans = DM_Sans({
   variable: "--font-dm-sans",
@@ -35,7 +36,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dm_sans.variable} ${poppins.variable} antialiased`}>
-        {children}
+        <div>
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   );
