@@ -53,21 +53,67 @@ export function UnitConverter() {
     tether: "Tether",
   };
 
-  // Convert between units
+  // Convert between units with full precision
   const convertUnits = (value: string, from: string, to: string): string => {
     if (!value || isNaN(Number(value))) return "";
 
     try {
-      // Convert input to wei first
-      const valueInWei = BigInt(
-        Math.floor(parseFloat(value) * parseFloat(weiConversions[from]))
-      );
+      const inputNum = parseFloat(value);
+      if (inputNum === 0) return "0";
 
-      // Convert from wei to target unit
-      const targetUnitWei = BigInt(weiConversions[to]);
-      const result = Number(valueInWei) / Number(targetUnitWei);
+      const fromWei = parseFloat(weiConversions[from]);
+      const toWei = parseFloat(weiConversions[to]);
 
-      return result.toString();
+      // Calculate the conversion factor
+      const conversionFactor = fromWei / toWei;
+      const result = inputNum * conversionFactor;
+
+      // Handle very large numbers
+      if (result >= 1e15) {
+        return result.toLocaleString("en-US", {
+          maximumFractionDigits: 0,
+          useGrouping: false,
+        });
+      }
+
+      // Handle very small numbers - show full decimal representation
+      if (result < 1 && result > 0) {
+        // Convert to string and handle precision
+        let resultStr = result.toString();
+
+        // If it's in scientific notation, convert to decimal
+        if (resultStr.includes("e")) {
+          const [base, exponent] = resultStr.split("e");
+          const exp = parseInt(exponent);
+          const baseNum = parseFloat(base);
+
+          if (exp < 0) {
+            // For negative exponents, create decimal string
+            const decimalPlaces =
+              Math.abs(exp) + (base.split(".")[1]?.length || 0);
+            resultStr = baseNum.toFixed(decimalPlaces);
+          } else {
+            // For positive exponents, multiply out
+            resultStr = (baseNum * Math.pow(10, exp)).toString();
+          }
+        }
+
+        // Remove trailing zeros after decimal point
+        if (resultStr.includes(".")) {
+          resultStr = resultStr.replace(/\.?0+$/, "");
+        }
+
+        return resultStr;
+      }
+
+      // Handle regular numbers
+      if (result % 1 === 0) {
+        return result.toString();
+      } else {
+        // For decimal numbers, show reasonable precision
+        const precision = result < 1 ? 18 : 8;
+        return parseFloat(result.toPrecision(precision)).toString();
+      }
     } catch (error) {
       return "Invalid input";
     }
@@ -121,6 +167,9 @@ export function UnitConverter() {
               Unit Converter
             </h1>
           </div>
+          <p className="text-[16px] sm:" style={{ color: "#8e8e93" }}>
+            Convert between different Wei units used in Ethereum development
+          </p>
         </div>
 
         {/* Main Converter */}
@@ -131,7 +180,7 @@ export function UnitConverter() {
             borderColor: "#e5e5e7",
           }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 relative">
             {/* From Section */}
             <div className="space-y-4">
               <label
@@ -164,26 +213,47 @@ export function UnitConverter() {
                   </option>
                 ))}
               </select>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Enter amount"
-                className="w-full p-4 text-lg border rounded-xl outline-none transition-all duration-150"
-                style={{
-                  borderColor: "#e5e5e7",
-                  color: "var(--color-dark)",
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = "var(--color-brand)";
-                  e.target.style.boxShadow =
-                    "0 0 0 2px rgba(39, 114, 245, 0.1)";
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = "#e5e5e7";
-                  e.target.style.boxShadow = "none";
-                }}
-              />
+              <div className="flex items-center gap-4">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Enter amount"
+                  className="w-full p-4 text-lg border rounded-xl outline-none transition-all duration-150"
+                  style={{
+                    borderColor: "#e5e5e7",
+                    color: "var(--color-dark)",
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = "var(--color-brand)";
+                    e.target.style.boxShadow =
+                      "0 0 0 2px rgba(39, 114, 245, 0.1)";
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = "#e5e5e7";
+                    e.target.style.boxShadow = "none";
+                  }}
+                />
+
+                <div className="hidden lg:flex items-center justify-center ">
+                  <button
+                    onClick={handleSwapUnits}
+                    className="w-12 h-12 text-white rounded-xl flex items-center justify-center transition-all duration-150 active:scale-95 cursor-pointer"
+                    style={{
+                      backgroundColor: "var(--color-brand)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = "#2062E5";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        "var(--color-brand)";
+                    }}
+                  >
+                    <ArrowUpDown className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
             </div>
 
             {/* Swap Button */}
@@ -202,23 +272,6 @@ export function UnitConverter() {
                 }}
               >
                 <ArrowUpDown className="w-5 h-5 rotate-90" />
-              </button>
-            </div>
-            <div className="hidden lg:flex items-center justify-center">
-              <button
-                onClick={handleSwapUnits}
-                className="w-12 h-12 text-white rounded-xl flex items-center justify-center transition-all duration-150 active:scale-95"
-                style={{
-                  backgroundColor: "var(--color-brand)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#2062E5";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "var(--color-brand)";
-                }}
-              >
-                <ArrowUpDown className="w-5 h-5" />
               </button>
             </div>
 
@@ -260,11 +313,12 @@ export function UnitConverter() {
                   value={result}
                   readOnly
                   placeholder="Result will appear here"
-                  className="w-full p-4 pr-12 text-lg border rounded-xl"
+                  className="w-full p-4 pr-12 text-lg border rounded-xl break-all"
                   style={{
                     backgroundColor: "var(--color-light)",
                     borderColor: "#e5e5e7",
                     color: "var(--color-dark)",
+                    fontFamily: "monospace",
                   }}
                 />
                 {result && (
@@ -407,6 +461,14 @@ export function UnitConverter() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Footer Info */}
+        <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
+          <p>
+            Perfect for Ethereum developers working with smart contracts and gas
+            calculations
+          </p>
         </div>
       </div>
     </div>

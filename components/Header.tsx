@@ -42,12 +42,6 @@ export function Header() {
           subtitle: "Wei unit converter",
           href: "/developers/unit-converter",
         },
-        {
-          icon: <DedicatedNodesIcon />,
-          title: "API Documentation",
-          subtitle: "Complete API reference",
-          href: "/developers/api-docs",
-        },
       ],
     },
     {
@@ -59,37 +53,11 @@ export function Header() {
           subtitle: "Quick start guide",
           href: "/docs/getting-started",
         },
-        {
-          icon: <DedicatedNodesIcon />,
-          title: "Tutorials",
-          subtitle: "Step-by-step tutorials",
-          badge: "New",
-          href: "/docs/tutorials",
-        },
-        {
-          icon: <RpcServiceIcon />,
-          title: "Best Practices",
-          subtitle: "Recommended patterns",
-          href: "/docs/best-practices",
-        },
       ],
     },
     {
       title: "Explorers",
-      items: [
-        {
-          icon: <DedicatedNodesIcon />,
-          title: "Block Explorer",
-          subtitle: "Explore blockchain data",
-          href: "/explorers/blocks",
-        },
-        {
-          icon: <RpcServiceIcon />,
-          title: "Transaction Explorer",
-          subtitle: "Search transactions",
-          href: "/explorers/transactions",
-        },
-      ],
+      items: [],
     },
   ];
 
