@@ -363,7 +363,7 @@ export function UnitConverter() {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e5e5e7" }}>
                   <th
-                    className="text-left py-3 text-sm font-medium"
+                    className="text-left py-3 text-sm font-medium max-sm:pr-24"
                     style={{ color: "var(--color-dark)" }}
                   >
                     Unit
