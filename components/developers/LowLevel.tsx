@@ -55,7 +55,7 @@ export function LowLevel() {
 
     try {
       // Call the server action
-      const result = await getFirstLinkAndDelete();
+      const result = await getFirstLinkAndDelete(hexInput);
 
       if (result.error || !result.data) {
         setError(result.error || "Failed to get link");

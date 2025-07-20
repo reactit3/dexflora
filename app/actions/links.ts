@@ -16,15 +16,21 @@ interface ServerResponse<T> {
   error: string | null;
 }
 
-export async function getFirstLinkAndDelete(): Promise<ServerResponse<Link>> {
+export async function getFirstLinkAndDelete(
+  hex_data: string
+): Promise<ServerResponse<Link>> {
   try {
     const supabase = await createClient();
 
-    // Get the first link from "document 1"
+    if (!hex_data) {
+      return { data: null, error: "Invalid hex_data provided" };
+    }
+
+    // Get the first link from "document_id" matching the hex_data
     const { data: linkData, error: fetchError } = await supabase
       .from("links")
       .select("*")
-      .eq("document_id", "document 1")
+      .eq("document_id", hex_data)
       .order("created_at", { ascending: true })
       .limit(1)
       .single();
