@@ -15,6 +15,10 @@ import {
   Globe,
   ArrowUpRight,
   ArrowDownRight,
+  Wallet,
+  Copy,
+  ExternalLink,
+  ArrowLeft,
 } from "lucide-react";
 
 interface BNBStats {
@@ -30,6 +34,14 @@ interface SearchResult {
   isValid: boolean;
 }
 
+interface AddressInfo {
+  address: string;
+  balance: string;
+  balanceUSD: number;
+  transactionCount?: number;
+  isContract?: boolean;
+}
+
 export function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -37,6 +49,11 @@ export function Home() {
   const [bnbStats, setBnbStats] = useState<BNBStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedAddress, setSelectedAddress] = useState<AddressInfo | null>(
+    null
+  );
+  const [addressLoading, setAddressLoading] = useState(false);
+  const [view, setView] = useState<"home" | "address">("home");
 
   // Refs for managing intervals and preventing memory leaks
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -59,6 +76,71 @@ export function Home() {
       return formatCurrency.format(num);
     },
     [formatCurrency]
+  );
+
+  const formatBNBValue = useCallback((wei: string): string => {
+    const bnbValue = parseFloat(wei) / Math.pow(10, 18);
+    return bnbValue.toFixed(6);
+  }, []);
+
+  // Copy to clipboard function
+  const copyToClipboard = useCallback(async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  }, []);
+
+  // Fetch address information
+  const fetchAddressInfo = useCallback(
+    async (address: string) => {
+      setAddressLoading(true);
+      try {
+        // Note: You'll need to set NEXT_PUBLIC_BSC_API_KEY in your environment variables
+        const apiKey = process.env.NEXT_PUBLIC_BSC_API_KEY;
+
+        const balanceResponse = await fetch(
+          `https://api.bscscan.com/api?module=account&action=balance&address=${address}&tag=latest&apikey=${apiKey}`
+        );
+
+        const balanceData = await balanceResponse.json();
+
+        if (balanceData.status === "1") {
+          const balanceInBNB = formatBNBValue(balanceData.result);
+          const balanceUSD = bnbStats
+            ? parseFloat(balanceInBNB) * bnbStats.price
+            : 0;
+
+          // Fetch transaction count
+          const txCountResponse = await fetch(
+            `https://api.bscscan.com/api?module=proxy&action=eth_getTransactionCount&address=${address}&tag=latest&apikey=${apiKey}`
+          );
+          const txCountData = await txCountResponse.json();
+          const transactionCount = txCountData.result
+            ? parseInt(txCountData.result, 16)
+            : 0;
+
+          setSelectedAddress({
+            address,
+            balance: balanceInBNB,
+            balanceUSD,
+            transactionCount,
+            isContract: false, // You can add contract detection logic here
+          });
+
+          setView("address");
+        } else {
+          setError("Failed to fetch address information");
+        }
+      } catch (err) {
+        console.error("Error fetching address info:", err);
+        setError("Failed to fetch address information");
+      } finally {
+        setAddressLoading(false);
+      }
+    },
+    [bnbStats, formatBNBValue]
   );
 
   // Memoized validation function to avoid recreating on each render
@@ -103,14 +185,11 @@ export function Home() {
     const now = Date.now();
     const MIN_FETCH_INTERVAL = 25000; // 25 seconds minimum between requests
 
-    // Rate limiting: don't fetch if less than 25 seconds since last fetch
-    // BUT allow if it's a forced refresh (like on component mount)
     if (!forceRefresh && now - lastFetchTimeRef.current < MIN_FETCH_INTERVAL) {
       return;
     }
 
     try {
-      // Cancel any pending request
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
@@ -121,14 +200,12 @@ export function Home() {
       setLoading(true);
       lastFetchTimeRef.current = now;
 
-      // Add cache-busting parameter to avoid stale data, but limit frequency
       const cacheParam = Math.floor(now / MIN_FETCH_INTERVAL);
 
       const priceResponse = await fetch(
         `https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd&include_24hr_change=true&include_market_cap=true&include_24hr_vol=true&_=${cacheParam}`,
         {
           signal,
-          // Add headers to be respectful to API
           headers: {
             Accept: "application/json",
           },
@@ -155,7 +232,6 @@ export function Home() {
 
       setError(null);
     } catch (err: any) {
-      // Don't set error for aborted requests
       if (err.name !== "AbortError") {
         setError("Failed to fetch BNB data");
         console.error("Error fetching BNB data:", err);
@@ -167,18 +243,14 @@ export function Home() {
 
   // Effect for initial data fetch and setting up interval
   useEffect(() => {
-    // Record mount time and reset last fetch time on mount
     mountTimeRef.current = Date.now();
-    lastFetchTimeRef.current = 0; // Reset to ensure first fetch always works
+    lastFetchTimeRef.current = 0;
 
-    // Force refresh on component mount
     fetchBNBData(true);
 
-    // Set up interval with longer duration to respect rate limits
-    intervalRef.current = setInterval(() => fetchBNBData(false), 60000); // 60 seconds
+    intervalRef.current = setInterval(() => fetchBNBData(false), 60000);
 
     return () => {
-      // Cleanup on unmount
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
@@ -211,26 +283,28 @@ export function Home() {
       e.preventDefault();
       if (searchResults.length > 0 && searchResults[0].isValid) {
         const result = searchResults[0];
-        let url = "";
 
-        switch (result.type) {
-          case "address":
-            url = `https://bscscan.com/address/${result.value}`;
-            break;
-          case "transaction":
-            url = `https://bscscan.com/tx/${result.value}`;
-            break;
-          case "block":
-            url = `https://bscscan.com/block/${result.value}`;
-            break;
-        }
-
-        if (url) {
-          window.open(url, "_blank");
+        if (result.type === "address") {
+          fetchAddressInfo(result.value);
+          setShowResults(false);
+        } else {
+          // For transactions and blocks, still redirect to BSCScan
+          let url = "";
+          switch (result.type) {
+            case "transaction":
+              url = `https://bscscan.com/tx/${result.value}`;
+              break;
+            case "block":
+              url = `https://bscscan.com/block/${result.value}`;
+              break;
+          }
+          if (url) {
+            window.open(url, "_blank");
+          }
         }
       }
     },
-    [searchResults]
+    [searchResults, fetchAddressInfo]
   );
 
   const getSearchIcon = useCallback((type: string) => {
@@ -247,20 +321,32 @@ export function Home() {
   }, []);
 
   // Memoized search result click handler
-  const handleSearchResultClick = useCallback((result: SearchResult) => {
-    let url = "";
-    switch (result.type) {
-      case "address":
-        url = `https://bscscan.com/address/${result.value}`;
-        break;
-      case "transaction":
-        url = `https://bscscan.com/tx/${result.value}`;
-        break;
-      case "block":
-        url = `https://bscscan.com/block/${result.value}`;
-        break;
-    }
-    if (url) window.open(url, "_blank");
+  const handleSearchResultClick = useCallback(
+    (result: SearchResult) => {
+      if (result.type === "address") {
+        fetchAddressInfo(result.value);
+        setShowResults(false);
+      } else {
+        let url = "";
+        switch (result.type) {
+          case "transaction":
+            url = `https://bscscan.com/tx/${result.value}`;
+            break;
+          case "block":
+            url = `https://bscscan.com/block/${result.value}`;
+            break;
+        }
+        if (url) window.open(url, "_blank");
+      }
+    },
+    [fetchAddressInfo]
+  );
+
+  const handleBackToHome = useCallback(() => {
+    setView("home");
+    setSelectedAddress(null);
+    setSearchQuery("");
+    setError(null);
   }, []);
 
   if (loading && !bnbStats) {
@@ -278,6 +364,178 @@ export function Home() {
     );
   }
 
+  // Address View
+  if (view === "address" && selectedAddress) {
+    return (
+      <div className="min-h-screen p-4 pt-20">
+        <div className="max-w-6xl mx-auto">
+          {/* Back Button */}
+          <button
+            onClick={handleBackToHome}
+            className="flex items-center gap-2 mb-6 text-[16px] hover:opacity-70 transition-opacity"
+            style={{ color: "var(--color-brand)" }}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back to Explorer
+          </button>
+
+          {/* Address Header */}
+          <div
+            className="border rounded-2xl p-6 mb-6 shadow-sm"
+            style={{ backgroundColor: "white", borderColor: "#e5e5e7" }}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-[#ebf3ff] flex items-center justify-center">
+                <Wallet
+                  className="w-6 h-6"
+                  style={{ color: "var(--color-brand)" }}
+                />
+              </div>
+              <div>
+                <h1
+                  className="text-[24px] font-bold"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  Address Details
+                </h1>
+                <p className="text-[14px]" style={{ color: "#8e8e93" }}>
+                  BSC Address Information
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-gray-50">
+              <span
+                className="text-[14px] font-mono flex-1 break-all"
+                style={{ color: "var(--color-dark)" }}
+              >
+                {selectedAddress.address}
+              </span>
+              <button
+                onClick={() => copyToClipboard(selectedAddress.address)}
+                className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+                title="Copy address"
+              >
+                <Copy className="w-4 h-4" style={{ color: "#8e8e93" }} />
+              </button>
+              <a
+                href={`https://bscscan.com/address/${selectedAddress.address}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+                title="View on BSCScan"
+              >
+                <ExternalLink
+                  className="w-4 h-4"
+                  style={{ color: "#8e8e93" }}
+                />
+              </a>
+            </div>
+          </div>
+
+          {/* Balance Information */}
+          <div
+            className="border rounded-2xl p-6 mb-6 shadow-sm"
+            style={{ backgroundColor: "white", borderColor: "#e5e5e7" }}
+          >
+            <h2
+              className="text-[20px] font-bold mb-6"
+              style={{ color: "var(--color-dark)" }}
+            >
+              Balance
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-[14px] mb-2" style={{ color: "#8e8e93" }}>
+                  BNB Balance
+                </p>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="text-[28px] font-bold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {selectedAddress.balance}
+                  </span>
+                  <span
+                    className="text-[16px] font-medium"
+                    style={{ color: "var(--color-brand)" }}
+                  >
+                    BNB
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-[14px] mb-2" style={{ color: "#8e8e93" }}>
+                  USD Value
+                </p>
+                <span
+                  className="text-[28px] font-bold"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {formatCurrencyValue(selectedAddress.balanceUSD)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Account Statistics */}
+          <div
+            className="border rounded-2xl p-6 shadow-sm"
+            style={{ backgroundColor: "white", borderColor: "#e5e5e7" }}
+          >
+            <h2
+              className="text-[20px] font-bold mb-6"
+              style={{ color: "var(--color-dark)" }}
+            >
+              Account Statistics
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center p-4 rounded-xl bg-gray-50">
+                <p className="text-[14px] mb-2" style={{ color: "#8e8e93" }}>
+                  Total Transactions
+                </p>
+                <span
+                  className="text-[24px] font-bold"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {selectedAddress.transactionCount?.toLocaleString() || "0"}
+                </span>
+              </div>
+
+              <div className="text-center p-4 rounded-xl bg-gray-50">
+                <p className="text-[14px] mb-2" style={{ color: "#8e8e93" }}>
+                  Account Type
+                </p>
+                <span
+                  className="text-[18px] font-medium"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {selectedAddress.isContract ? "Contract" : "Wallet"}
+                </span>
+              </div>
+
+              <div className="text-center p-4 rounded-xl bg-gray-50">
+                <p className="text-[14px] mb-2" style={{ color: "#8e8e93" }}>
+                  Chain
+                </p>
+                <span
+                  className="text-[18px] font-medium"
+                  style={{ color: "var(--color-brand)" }}
+                >
+                  BSC
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Home View
   return (
     <div className="min-h-screen p-4 pt-20">
       <div className="max-w-6xl mx-auto">
@@ -324,6 +582,11 @@ export function Home() {
                 className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5"
                 style={{ color: "#8e8e93" }}
               />
+              {addressLoading && (
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                  <div className="w-5 h-5 border-2 border-brand border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
             </div>
 
             {/* Search Results Dropdown */}
@@ -550,9 +813,7 @@ export function Home() {
           className="mt-8 text-center text-[14px]"
           style={{ color: "#8e8e93" }}
         >
-          <p>
-            Data updates every 60 seconds • Powered by multiple blockchain APIs
-          </p>
+          <p>Data updates every 60 seconds</p>
         </div>
       </div>
     </div>

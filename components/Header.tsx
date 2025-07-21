@@ -197,7 +197,7 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <div className="bg-white fixed top-0 left-0 right-0 z-50">
+    <div className="bg-white fixed top-0 left-0 right-0 z-50 max-w-[1284px] mx-auto">
       <header className="px-4 py-3 w-full flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
