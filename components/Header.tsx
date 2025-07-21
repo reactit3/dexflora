@@ -6,6 +6,7 @@ import {
   AppChainIcon,
   ChevronDown,
   DedicatedNodesIcon,
+  FaqIcon,
   RpcServiceIcon,
 } from "./Icons";
 import { GithubButton } from "./GithubActionButton";
@@ -41,6 +42,12 @@ export function Header() {
           title: "Getting Started",
           subtitle: "Quick start guide",
           href: "#",
+        },
+        {
+          icon: <FaqIcon />,
+          title: "Privacy Policy",
+          subtitle: "How we respect and protect your privacy",
+          href: "/privacy-policy",
         },
       ],
     },
