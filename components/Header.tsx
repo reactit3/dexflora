@@ -42,7 +42,7 @@ export function Header() {
         {
           icon: <AppChainIcon />,
           title: "BNB chain",
-          subtitle: "Quick start guide",
+          subtitle: "Developer docs for BSC",
           href: "https://docs.bnbchain.org/bnb-smart-chain/",
         },
         {
