@@ -9,6 +9,22 @@ import {
   FaqIcon,
   RpcServiceIcon,
 } from "./Icons";
+import {
+  Globe,
+  Search,
+  Radar,
+  Network,
+  Compass,
+  SatelliteDish,
+  Map,
+  Eye,
+  ExternalLink,
+  ScanSearch,
+  FileImage,
+  Code2,
+  Type,
+} from "lucide-react";
+
 import { GithubButton } from "./GithubActionButton";
 
 // TypeScript interfaces
@@ -38,10 +54,10 @@ export function Header() {
       title: "Documentation",
       items: [
         {
-          icon: <RpcServiceIcon />,
-          title: "Getting Started",
+          icon: <AppChainIcon />,
+          title: "BNB chain",
           subtitle: "Quick start guide",
-          href: "#",
+          href: "https://docs.bnbchain.org/bnb-smart-chain/",
         },
         {
           icon: <FaqIcon />,
@@ -55,67 +71,68 @@ export function Header() {
       title: "Explorers",
       items: [
         {
-          icon: <AppChainIcon />,
+          icon: <ScanSearch size={20} />, // More fitting for scanning a chain
           title: "BscScan",
-          subtitle: "Build custom blockchain",
+          subtitle: "Explore BNB Chain data",
           href: "https://bscscan.com/",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <Radar size={20} />,
           title: "OKLink (BNB Chain Explorer)",
-          subtitle: "Build custom blockchain",
+          subtitle: "Visualize blockchain activity",
           href: "https://www.oklink.com/bsc",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <Network size={20} />,
           title: "Bitquery Explorer",
-          subtitle: "Build custom blockchain",
+          subtitle: "Query smart contract activity",
           href: "https://explorer.bitquery.io/bsc",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <Compass size={20} />,
           title: "DexGuru",
-          subtitle: "Build custom blockchain",
+          subtitle: "Live DEX trades and token info",
           href: "https://dex.guru/",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <Eye size={20} />,
           title: "Bloxy Explorer",
-          subtitle: "Build custom blockchain",
+          subtitle: "Detailed transaction tracking",
           href: "https://bloxy.info/",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <SatelliteDish size={20} />,
           title: "BSC Trace",
-          subtitle: "Build custom blockchain",
+          subtitle: "Trace BNB chain activity",
           href: "https://bsctrace.com/",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <Map size={20} />,
           title: "Tokenview (BNB Chain Explorer)",
-          subtitle: "Build custom blockchain",
+          subtitle: "Token analytics & tracking",
           href: "https://bsc.tokenview.io/",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <Globe size={20} />,
           title: "Blockchair (BNB Smart Chain)",
-          subtitle: "Build custom blockchain",
+          subtitle: "Multi-chain block explorer",
           href: "https://blockchair.com/binance-smart-chain",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <ScanSearch size={20} />,
           title: "BscScan Testnet",
-          subtitle: "Build custom blockchain",
+          subtitle: "BNB Chain testnet explorer",
           href: "https://testnet.bscscan.com/",
         },
         {
-          icon: <AppChainIcon />,
+          icon: <ExternalLink size={20} />,
           title: "AtomScan (BSC)",
-          subtitle: "Build custom blockchain",
+          subtitle: "Minimal chain explorer",
           href: "https://atoms.xyz/bsc",
         },
       ],
     },
+
     {
       title: "Developers",
       items: [
@@ -133,19 +150,19 @@ export function Header() {
           href: "/developers/unit-converter",
         },
         {
-          icon: <RpcServiceIcon />,
+          icon: <FileImage size={20} />,
           title: "Base64 Converter",
           subtitle: "Base 64 to image converter",
           href: "/developers/base64-converter",
         },
         {
-          icon: <RpcServiceIcon />,
+          icon: <Code2 size={20} />,
           title: "Bytecode Converter",
           subtitle: "Bytecode to opcode converter",
           href: "/developers/bytecode-converter",
         },
         {
-          icon: <RpcServiceIcon />,
+          icon: <Type size={20} />,
           title: "Utf8 Converter",
           subtitle: "Utf 8 to hex and hex to utf 8",
           href: "/developers/utf8-converter",
@@ -259,7 +276,7 @@ export function Header() {
                       }`}
                     >
                       {section.items.map((item, itemIndex) => {
-                        const isExplorer = section.title === "Explorers";
+                        const isExplorer = item.href.startsWith("https");
                         const isCurrentPath = pathname === item.href;
 
                         return (
@@ -370,7 +387,7 @@ export function Header() {
                   const isTouched = activeIndex === itemKey;
                   const isCurrentPath = pathname === item.href;
                   const isActive = isTouched || isCurrentPath;
-                  const isExplorer = section.title === "Explorers";
+                  const isExplorer = item.href.startsWith("https");
 
                   return (
                     <a
