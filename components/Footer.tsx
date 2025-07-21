@@ -55,7 +55,7 @@ export function Footer() {
 
   return (
     <footer className="bg-white border-t border-gray-100 mt-16 ">
-      <div className="  px-4 py-12">
+      <div className="  px-4 pb-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Section */}
@@ -137,9 +137,6 @@ export function Footer() {
             </div>
           </div>
         </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-brand via-blue-400 to-brand opacity-20"></div>
       </div>
     </footer>
   );

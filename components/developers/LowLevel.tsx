@@ -99,7 +99,7 @@ export function LowLevel() {
   };
 
   return (
-    <div className="min-h-screen p-4">
+    <div className=" p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
