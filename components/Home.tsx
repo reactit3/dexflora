@@ -803,7 +803,7 @@ export function Home() {
                     Network analytics
                   </p>
                 </div>
-              </div>
+              </div>  
             </a>
           </div>
         </div>
