@@ -1,26 +1,13 @@
 "use client";
 import Link from "next/link";
 import {
-  AppChainIcon,
   BnbIcon,
   CoinMarketCapIcon,
-  DedicatedNodesIcon,
-  FaqIcon,
   GithubIcon,
   LinkedlnIcon,
-  RpcServiceIcon,
   XIcon,
 } from "./Icons";
-import {
-  Globe,
-  FileImage,
-  Code2,
-  Type,
-  Github,
-  Twitter,
-  Mail,
-  ExternalLink,
-} from "lucide-react";
+import { ExternalLink, Mail } from "lucide-react";
 import { navSections } from "@/lib/data";
 
 export function Footer() {
@@ -40,7 +27,6 @@ export function Footer() {
       icon: <GithubIcon />,
       href: "https://github.com/bnb-chain",
     },
-
     {
       name: "Coin Market Cap",
       icon: <CoinMarketCapIcon />,
@@ -54,14 +40,14 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-white border-t border-gray-100 mt-16 ">
+    <footer className="bg-white border-t border-gray-100 mt-16 relative ">
       <div className="  px-4 py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
-              <h3 className="font-poppins text-[22px] tracking-[2px] text-brand font-bold">
+              <h3 className="font-poppins text-2xl tracking-wider text-brand font-bold">
                 DEXFLORA
               </h3>
             </Link>
@@ -138,6 +124,14 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Mail  */}
+      <a
+        href="mailto:legal@dexflora.com"
+        className="fixed bottom-12 right-4 bg-brand text-white hover:bg-[#2062E5] transition-all ease-in-out p-3 rounded-full cursor-pointer"
+      >
+        <Mail className="size-5" />
+      </a>
     </footer>
   );
 }
