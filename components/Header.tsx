@@ -120,6 +120,24 @@ export function Header() {
           subtitle: "Wei unit converter",
           href: "/developers/unit-converter",
         },
+        {
+          icon: <RpcServiceIcon />,
+          title: "Base64 Converter",
+          subtitle: "Base 64 to image converter",
+          href: "/developers/base64-converter",
+        },
+        {
+          icon: <RpcServiceIcon />,
+          title: "Bytecode Converter",
+          subtitle: "Bytecode to opcode converter",
+          href: "/developers/bytecode-converter",
+        },
+        {
+          icon: <RpcServiceIcon />,
+          title: "Utf8 Converter",
+          subtitle: "Utf 8 to hex and hex to utf 8",
+          href: "/developers/utf8-converter",
+        },
       ],
     },
   ];
