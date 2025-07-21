@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const dm_sans = DM_Sans({
   variable: "--font-dm-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
         <div className=" max-w-[1284px] mx-auto overflow-hidden">
           <Header />
           <div className="overflow-y-auto mt-[75px]">{children}</div>
+          <Footer />
         </div>
       </body>
     </html>

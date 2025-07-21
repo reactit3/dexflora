@@ -2,30 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import {
-  AppChainIcon,
-  ChevronDown,
-  DedicatedNodesIcon,
-  FaqIcon,
-  RpcServiceIcon,
-} from "./Icons";
-import { Globe, FileImage, Code2, Type } from "lucide-react";
-
+import { ChevronDown } from "./Icons";
 import { GithubButton } from "./GithubActionButton";
-
-// TypeScript interfaces
-interface NavItem {
-  title: string;
-  subtitle?: string;
-  badge?: string;
-  icon: React.ReactElement;
-  href: string;
-}
-
-interface NavSection {
-  title: string;
-  items: NavItem[];
-}
+import { navSections } from "@/lib/data";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,129 +12,6 @@ export function Header() {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-
-  // Single array containing all navigation sections
-  const navSections: NavSection[] = [
-    {
-      title: "Documentation",
-      items: [
-        {
-          icon: <AppChainIcon />,
-          title: "BNB chain",
-          subtitle: "Developer docs for BSC",
-          href: "https://docs.bnbchain.org/bnb-smart-chain/",
-        },
-        {
-          icon: <FaqIcon />,
-          title: "Privacy Policy",
-          subtitle: "How we respect and protect your privacy",
-          href: "/privacy-policy",
-        },
-      ],
-    },
-    {
-      title: "Explorers",
-      items: [
-        {
-          icon: <Globe size={24} />,
-          title: "BscScan",
-          subtitle: "Explore BNB Chain data",
-          href: "https://bscscan.com/",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "OKLink (BNB Chain Explorer)",
-          subtitle: "Visualize blockchain activity",
-          href: "https://www.oklink.com/bsc",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "Bitquery Explorer",
-          subtitle: "Query smart contract activity",
-          href: "https://explorer.bitquery.io/bsc",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "DexGuru",
-          subtitle: "Live DEX trades and token info",
-          href: "https://dex.guru/",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "Bloxy Explorer",
-          subtitle: "Detailed transaction tracking",
-          href: "https://bloxy.info/",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "BSC Trace",
-          subtitle: "Trace BNB chain activity",
-          href: "https://bsctrace.com/",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "Tokenview (BNB Chain Explorer)",
-          subtitle: "Token analytics & tracking",
-          href: "https://bsc.tokenview.io/",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "Blockchair (BNB Smart Chain)",
-          subtitle: "Multi-chain block explorer",
-          href: "https://blockchair.com/binance-smart-chain",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "BscScan Testnet",
-          subtitle: "BNB Chain testnet explorer",
-          href: "https://testnet.bscscan.com/",
-        },
-        {
-          icon: <Globe size={24} />,
-          title: "AtomScan (BSC)",
-          subtitle: "Minimal chain explorer",
-          href: "https://atoms.xyz/bsc",
-        },
-      ],
-    },
-
-    {
-      title: "Developers",
-      items: [
-        {
-          icon: <DedicatedNodesIcon />,
-          title: "Low Level Interactions",
-          subtitle: "Private-based nodes",
-          badge: "Beta",
-          href: "/developers/low-level",
-        },
-        {
-          icon: <RpcServiceIcon />,
-          title: "Unit Converter",
-          subtitle: "Wei unit converter",
-          href: "/developers/unit-converter",
-        },
-        {
-          icon: <FileImage size={20} />,
-          title: "Base64 Converter",
-          subtitle: "Base 64 to image converter",
-          href: "/developers/base64-converter",
-        },
-        {
-          icon: <Code2 size={20} />,
-          title: "Bytecode Converter",
-          subtitle: "Bytecode to opcode converter",
-          href: "/developers/bytecode-converter",
-        },
-        {
-          icon: <Type size={20} />,
-          title: "Utf8 Converter",
-          subtitle: "Utf 8 to hex and hex to utf 8",
-          href: "/developers/utf8-converter",
-        },
-      ],
-    },
-  ];
 
   // Create a unique key for each item across all sections
   const createItemKey = (sectionIndex: number, itemIndex: number) =>
@@ -262,7 +118,7 @@ export function Header() {
                       }`}
                     >
                       {section.items.map((item, itemIndex) => {
-                        const isExplorer = item.href.startsWith("https");
+                        const isExternal = item.href.startsWith("https");
                         const isCurrentPath = pathname === item.href;
 
                         return (
@@ -273,8 +129,8 @@ export function Header() {
                             className={`rounded-xl p-3 flex items-center gap-3 transition-all duration-150 ease-in-out cursor-pointer hover:bg-light group ${
                               isCurrentPath ? "bg-light" : ""
                             }`}
-                            target={isExplorer ? "_blank" : "_self"}
-                            rel={isExplorer ? "noopener noreferrer" : undefined}
+                            target={isExternal ? "_blank" : "_self"}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
                           >
                             <div
                               className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-150 ease-in-out text-[#2772F5] group-hover:bg-[#2062E5] group-hover:text-white ${
@@ -373,7 +229,7 @@ export function Header() {
                   const isTouched = activeIndex === itemKey;
                   const isCurrentPath = pathname === item.href;
                   const isActive = isTouched || isCurrentPath;
-                  const isExplorer = item.href.startsWith("https");
+                  const isExternal = item.href.startsWith("https");
 
                   return (
                     <a
@@ -383,8 +239,8 @@ export function Header() {
                       className={`rounded-2xl p-2 flex items-center gap-4 transition-all duration-150 ease-in-out cursor-pointer ${
                         isActive ? "bg-light" : "bg-transparent"
                       }`}
-                      target={isExplorer ? "_blank" : "_self"}
-                      rel={isExplorer ? "noopener noreferrer" : undefined}
+                      target={isExternal ? "_blank" : "_self"}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
                     >
                       <div
                         className={`w-13 h-13 rounded-2xl flex items-center justify-center transition-all duration-150 ease-in-out text-[#2772F5] ${
