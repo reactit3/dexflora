@@ -61,7 +61,7 @@ export function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
-              <h3 className="font-poppins text-2xl tracking-wider text-brand font-bold">
+              <h3 className="font-poppins text-[22px] tracking-[2px] text-brand font-bold">
                 DEXFLORA
               </h3>
             </Link>

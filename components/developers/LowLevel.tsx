@@ -254,12 +254,6 @@ export function LowLevel() {
                   }}
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center"
-                      style={{ backgroundColor: "#D4EDDA" }}
-                    >
-                      <span className="text-xl">✅</span>
-                    </div>
                     <div>
                       <h3
                         className="text-lg font-semibold"
