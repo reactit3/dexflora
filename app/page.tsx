@@ -1,5 +1,5 @@
-import { Header } from "@/components/Header";
+import { Home } from "@/components/Home";
 
-export default function HomePage() {
-  return <div>hey there</div>;
+export default async function HomePage() {
+  return <Home />;
 }

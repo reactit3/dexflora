@@ -40,7 +40,7 @@ export function Header() {
           icon: <RpcServiceIcon />,
           title: "Getting Started",
           subtitle: "Quick start guide",
-          href: "/docs/getting-started",
+          href: "#",
         },
       ],
     },
@@ -307,10 +307,13 @@ export function Header() {
         {/* Action Buttons */}
         <div className="flex items-center gap-2 text-[16px] font-medium max-md:hidden">
           <GithubButton />
-          <button className="px-4 bg-brand hover:bg-[#2062E5] text-white py-2 rounded-xl flex items-center gap-2 transition-all ease-in-out cursor-pointer">
+          <Link
+            href="/"
+            className="px-4 bg-brand hover:bg-[#2062E5] text-white py-2 rounded-xl flex items-center gap-2 transition-all ease-in-out cursor-pointer"
+          >
             <span>Home</span>
             <img src="/assets/icons/cursor-click.svg" alt="Cursor Click" />
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Hamburger Menu */}
@@ -339,10 +342,14 @@ export function Header() {
         >
           <div className="grid sm:grid-cols-2 items-center gap-3 sm:gap-2 text-[16px] font-medium mt-4">
             <GithubButton className="justify-center w-full py-4" />
-            <button className="justify-center p-4 bg-brand active:bg-[#2062E5] text-white rounded-xl flex items-center gap-2 transition-all ease-in-out cursor-pointer">
+            <Link
+              href="/"
+              onClick={handleLinkClick}
+              className="justify-center p-4 bg-brand active:bg-[#2062E5] text-white rounded-xl flex items-center gap-2 transition-all ease-in-out cursor-pointer"
+            >
               <span>Home</span>
               <img src="/assets/icons/cursor-click.svg" alt="Cursor Click" />
-            </button>
+            </Link>
           </div>
 
           {/* Loop through all sections */}
