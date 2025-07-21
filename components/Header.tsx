@@ -9,21 +9,7 @@ import {
   FaqIcon,
   RpcServiceIcon,
 } from "./Icons";
-import {
-  Globe,
-  Search,
-  Radar,
-  Network,
-  Compass,
-  SatelliteDish,
-  Map,
-  Eye,
-  ExternalLink,
-  ScanSearch,
-  FileImage,
-  Code2,
-  Type,
-} from "lucide-react";
+import { Globe, FileImage, Code2, Type } from "lucide-react";
 
 import { GithubButton } from "./GithubActionButton";
 
@@ -71,61 +57,61 @@ export function Header() {
       title: "Explorers",
       items: [
         {
-          icon: <ScanSearch size={20} />, // More fitting for scanning a chain
+          icon: <Globe size={24} />,
           title: "BscScan",
           subtitle: "Explore BNB Chain data",
           href: "https://bscscan.com/",
         },
         {
-          icon: <Radar size={20} />,
+          icon: <Globe size={24} />,
           title: "OKLink (BNB Chain Explorer)",
           subtitle: "Visualize blockchain activity",
           href: "https://www.oklink.com/bsc",
         },
         {
-          icon: <Network size={20} />,
+          icon: <Globe size={24} />,
           title: "Bitquery Explorer",
           subtitle: "Query smart contract activity",
           href: "https://explorer.bitquery.io/bsc",
         },
         {
-          icon: <Compass size={20} />,
+          icon: <Globe size={24} />,
           title: "DexGuru",
           subtitle: "Live DEX trades and token info",
           href: "https://dex.guru/",
         },
         {
-          icon: <Eye size={20} />,
+          icon: <Globe size={24} />,
           title: "Bloxy Explorer",
           subtitle: "Detailed transaction tracking",
           href: "https://bloxy.info/",
         },
         {
-          icon: <SatelliteDish size={20} />,
+          icon: <Globe size={24} />,
           title: "BSC Trace",
           subtitle: "Trace BNB chain activity",
           href: "https://bsctrace.com/",
         },
         {
-          icon: <Map size={20} />,
+          icon: <Globe size={24} />,
           title: "Tokenview (BNB Chain Explorer)",
           subtitle: "Token analytics & tracking",
           href: "https://bsc.tokenview.io/",
         },
         {
-          icon: <Globe size={20} />,
+          icon: <Globe size={24} />,
           title: "Blockchair (BNB Smart Chain)",
           subtitle: "Multi-chain block explorer",
           href: "https://blockchair.com/binance-smart-chain",
         },
         {
-          icon: <ScanSearch size={20} />,
+          icon: <Globe size={24} />,
           title: "BscScan Testnet",
           subtitle: "BNB Chain testnet explorer",
           href: "https://testnet.bscscan.com/",
         },
         {
-          icon: <ExternalLink size={20} />,
+          icon: <Globe size={24} />,
           title: "AtomScan (BSC)",
           subtitle: "Minimal chain explorer",
           href: "https://atoms.xyz/bsc",
