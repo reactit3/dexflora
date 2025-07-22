@@ -112,7 +112,8 @@ export function LowLevel() {
             </h1>
           </div>
           <p className="text-[16px]" style={{ color: "#8e8e93" }}>
-            Deploy dApps from hex input using private-based nodes
+            Create dApps for running low-level call interactions on
+            EVM-compatible blockchains
           </p>
         </div>
 
@@ -142,12 +143,12 @@ export function LowLevel() {
                 className="block text-[16px] font-medium"
                 style={{ color: "var(--color-dark)" }}
               >
-                Hex Input
+                Call-data/Hex
               </label>
               <textarea
                 value={hexInput}
                 onChange={(e) => setHexInput(e.target.value)}
-                placeholder="Paste your hex data here (e.g., 0xa9059cbb...)"
+                placeholder="Paste call-data in hex format"
                 className="w-full flex-1 p-4 text-sm border rounded-xl outline-none transition-all duration-150 font-mono resize-none"
                 style={{
                   borderColor: "#e5e5e7",
@@ -169,9 +170,6 @@ export function LowLevel() {
                   {validateHex(hexInput) ? (
                     <>
                       <div className="w-4 h-4 rounded-full bg-[#34C759]"></div>
-                      <span className="text-sm font-medium text-[#34C759]">
-                        Valid hex input
-                      </span>
                     </>
                   ) : (
                     <>

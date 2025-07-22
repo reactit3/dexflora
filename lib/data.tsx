@@ -110,7 +110,7 @@ export const navSections: NavSection[] = [
       {
         icon: <DedicatedNodesIcon />,
         title: "Low Level Interactions",
-        subtitle: "Private-based nodes",
+        subtitle: "Low-Level EVM Interactions",
         badge: "Beta",
         href: "/developers/low-level",
       },
