@@ -26,7 +26,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "DexFlora",
-  description: "Welcome to DexFlora",
+  description:
+    "A simple, browser-based platform for interacting with blockchain JSON-RPC endpoints, complete with a suite of additional tools to enhance your development and testing experience.",
 };
 
 export default function RootLayout({
