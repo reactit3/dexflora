@@ -288,7 +288,7 @@ export function LowLevel() {
                             color: "var(--color-dark)",
                           }}
                         />
-                        <button
+                        {/* <button
                           onClick={() => handleCopy(createdApp.url)}
                           className="w-10 h-10 flex items-center justify-center border rounded-xl transition-colors"
                           style={{ borderColor: "#e5e5e7" }}
@@ -308,8 +308,8 @@ export function LowLevel() {
                             className="w-4 h-4"
                             style={{ color: "#8e8e93" }}
                           />
-                        </button>
-                        <button
+                        </button> */}
+                        {/* <button
                           onClick={() => window.open(createdApp.url, "_blank")}
                           className="w-10 h-10 flex items-center justify-center border rounded-xl transition-colors"
                           style={{ borderColor: "#e5e5e7" }}
@@ -329,7 +329,7 @@ export function LowLevel() {
                             className="w-4 h-4"
                             style={{ color: "#8e8e93" }}
                           />
-                        </button>
+                        </button> */}
                       </div>
                     </div>
 
@@ -364,6 +364,24 @@ export function LowLevel() {
                         </p>
                       </div>
                     </div>
+
+                    <button
+                      onClick={() => handleCopy(createdApp.url)}
+                      className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors"
+                      style={{
+                        backgroundColor: "#ebf3ff",
+                        color: "#0b57d0",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = "#D6E6FF";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = "#ebf3ff";
+                      }}
+                    >
+                      <Copy className="w-4 h-4" />
+                      Copy
+                    </button>
 
                     {copied && (
                       <p
