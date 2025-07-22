@@ -57,7 +57,7 @@ export function Footer() {
             </p>
 
             {/* Social Links */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mb-6">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
@@ -71,6 +71,15 @@ export function Footer() {
                 </a>
               ))}
             </div>
+
+            {/* Disclaimer */}
+            <p className="text-xs text-gray-600 leading-relaxed">
+              <strong>Disclaimer:</strong> Dexflora is
+              an independent entity and is not partnered with, affiliated with,
+              managed by BNB or BNB Chain© in any way. Dexflora does not control
+              or manage any official BNB social media accounts, nor does it
+              offer any services on behalf of BNB or BNB Chain.
+            </p>
           </div>
 
           {/* Footer Links Sections */}
