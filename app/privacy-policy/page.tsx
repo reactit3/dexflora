@@ -25,13 +25,13 @@ export default function PrivacyPolicyPage() {
               LAST UPDATED: 21 July, 2025
             </p>
             <p className="mb-4" style={{ color: "var(--color-dark)" }}>
-              At Dexflorer, we respect your privacy and are committed to
+              At Dexflora, we respect your privacy and are committed to
               protecting it. This Privacy Policy explains what personal data (if
               any) we collect, how we use it, and your rights.
             </p>
             <p className="mb-4" style={{ color: "var(--color-dark)" }}>
               If you do not agree with our policies and practices, please
-              discontinue your use of Dexflorer.
+              discontinue your use of Dexflora.
             </p>
             <p style={{ color: "var(--color-dark)" }}>
               This Policy is aligned with the European Union General Data
@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
                 Who We Are
               </h4>
               <p style={{ color: "var(--color-dark)" }}>
-                Dexflorer is a simple browser-based tool that allows users to
+                Dexflora is a simple browser-based tool that allows users to
                 interact directly with blockchain JSON-RPC endpoints.
               </p>
             </div>
@@ -63,7 +63,7 @@ export default function PrivacyPolicyPage() {
               </h4>
               <div className="space-y-3" style={{ color: "var(--color-dark)" }}>
                 <p>
-                  Dexflorer does not collect, store, or process any personal
+                  Dexflora does not collect, store, or process any personal
                   data.
                 </p>
                 <p>
@@ -71,7 +71,7 @@ export default function PrivacyPolicyPage() {
                   browser and the selected blockchain node.
                 </p>
                 <p>
-                  Dexflorer does not have access to your blockchain keys,
+                  Dexflora does not have access to your blockchain keys,
                   accounts, or any sensitive information.
                 </p>
                 <p>No cookies, trackers, or analytics scripts are used.</p>
@@ -91,13 +91,13 @@ export default function PrivacyPolicyPage() {
               </h4>
               <div className="space-y-3" style={{ color: "var(--color-dark)" }}>
                 <p>
-                  Dexflorer communicates directly with public blockchain RPC
+                  Dexflora communicates directly with public blockchain RPC
                   endpoints. Data transmitted depends on your interactions with
                   those nodes. Please review the privacy practices of any RPC
                   provider you choose to use.
                 </p>
                 <p>
-                  Dexflorer is not responsible for how any third-party service
+                  Dexflora is not responsible for how any third-party service
                   providers process your data.
                 </p>
               </div>
@@ -112,12 +112,12 @@ export default function PrivacyPolicyPage() {
               </h4>
               <div className="space-y-3" style={{ color: "var(--color-dark)" }}>
                 <p>
-                  Since Dexflorer does not collect or process personal data,
+                  Since Dexflora does not collect or process personal data,
                   there is no user data to manage, access, or erase.
                 </p>
                 <p>
                   If you believe any third-party provider accessed your personal
-                  data through the use of Dexflorer, please contact them
+                  data through the use of Dexflora, please contact them
                   directly.
                 </p>
               </div>
@@ -164,10 +164,10 @@ export default function PrivacyPolicyPage() {
                 1. Introduction
               </h4>
               <p style={{ color: "var(--color-dark)" }}>
-                Welcome to Dexflorer, a simple browser-based tool for
-                interacting with blockchain JSON-RPC endpoints (the "Service").
-                By using Dexflorer, you agree to these Terms of Service
-                ("Terms"). If you do not agree, please stop using the Service.
+                Welcome to Dexflora, a simple browser-based tool for interacting
+                with blockchain JSON-RPC endpoints (the "Service"). By using
+                Dexflora, you agree to these Terms of Service ("Terms"). If you
+                do not agree, please stop using the Service.
               </p>
             </div>
 
@@ -180,11 +180,11 @@ export default function PrivacyPolicyPage() {
               </h4>
               <div className="space-y-3" style={{ color: "var(--color-dark)" }}>
                 <p>
-                  Dexflorer is a free, open tool provided for developers,
+                  Dexflora is a free, open tool provided for developers,
                   researchers, and blockchain enthusiasts.
                 </p>
                 <p>
-                  You are free to use, modify, and distribute Dexflorer for
+                  You are free to use, modify, and distribute Dexflora for
                   personal or commercial purposes.
                 </p>
                 <p>No registration or payment is required.</p>
@@ -204,7 +204,7 @@ export default function PrivacyPolicyPage() {
               </h4>
               <div className="space-y-3" style={{ color: "var(--color-dark)" }}>
                 <p>
-                  Dexflorer is provided "as is" and "as available". We make no
+                  Dexflora is provided "as is" and "as available". We make no
                   warranties or representations regarding the Service's
                   functionality, availability, or accuracy.
                 </p>
@@ -225,7 +225,7 @@ export default function PrivacyPolicyPage() {
                 4. User Responsibility
               </h4>
               <div className="space-y-3" style={{ color: "var(--color-dark)" }}>
-                <p>By using Dexflorer, you acknowledge:</p>
+                <p>By using Dexflora, you acknowledge:</p>
                 <ul className="list-disc list-inside ml-4 space-y-1">
                   <li>
                     You are responsible for all interactions with public
@@ -247,7 +247,7 @@ export default function PrivacyPolicyPage() {
                 5. Intellectual Property
               </h4>
               <p style={{ color: "var(--color-dark)" }}>
-                Dexflorer's code and interface are provided under open usage
+                Dexflora's code and interface are provided under open usage
                 rights. You may reuse, adapt, or redistribute them in compliance
                 with applicable open-source licenses if stated.
               </p>
@@ -262,7 +262,7 @@ export default function PrivacyPolicyPage() {
               </h4>
               <p style={{ color: "var(--color-dark)" }}>
                 We may update these Terms at any time. Changes will be posted on
-                this page. Your continued use of Dexflorer means you accept any
+                this page. Your continued use of Dexflora means you accept any
                 updates.
               </p>
             </div>
@@ -284,7 +284,7 @@ export default function PrivacyPolicyPage() {
             Legal Information
           </h1>
           <p className="text-[16px]" style={{ color: "#8e8e93" }}>
-            Privacy Policy and Terms of Service for Dexflorer
+            Privacy Policy and Terms of Service for Dexflora
           </p>
         </div>
 
