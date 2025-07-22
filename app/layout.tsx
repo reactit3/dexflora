@@ -24,7 +24,7 @@ export const viewport: Viewport = {
   themeColor: "#2772f5",
 };
 
-export const metadata: Metadata = {
+export const metadata: Metadata = {  
   title: "DexFlora",
   description:
     "A simple, browser-based platform for interacting with blockchain JSON-RPC endpoints, complete with a suite of additional tools to enhance your development and testing experience.",
