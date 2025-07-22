@@ -51,9 +51,10 @@ export function Footer() {
                 DEXFLORA
               </h3>
             </Link>
-            <p className="text-gray-600 text-sm leading-relaxed mb-6">
-              Your comprehensive platform for BNB Smart Chain exploration,
-              development tools, and blockchain analytics.
+            <p className="text-gray-600 text-sm leading-relaxed mb-6 text-justify">
+              A simple, browser-based platform for interacting with blockchain
+              JSON-RPC endpoints, complete with a suite of additional tools to
+              enhance your development and testing experience.
             </p>
 
             {/* Social Links */}
@@ -73,12 +74,12 @@ export function Footer() {
             </div>
 
             {/* Disclaimer */}
-            <p className="text-xs text-gray-600 leading-relaxed">
-              <strong>Disclaimer:</strong> Dexflora is
-              an independent entity and is not partnered with, affiliated with,
-              managed by BNB or BNB Chain© in any way. Dexflora does not control
-              or manage any official BNB social media accounts, nor does it
-              offer any services on behalf of BNB or BNB Chain.
+            <p className="text-xs text-gray-600 leading-relaxed text-justify">
+              <strong>Disclaimer:</strong> Dexflora is an independent entity and
+              is not partnered with, affiliated with, managed by BNB or BNB
+              Chain© in any way. Dexflora does not control or manage any
+              official BNB social media accounts, nor does it offer any services
+              on behalf of BNB or BNB Chain.
             </p>
           </div>
 

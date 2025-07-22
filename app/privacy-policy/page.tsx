@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
       title: "Privacy Policy",
       icon: Shield,
       content: (
-        <div className="space-y-6">
+        <div className="space-y-6 text-justify">
           <div className="mb-6">
             <p
               className="text-sm font-medium mb-4"
@@ -155,7 +155,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 text-justify">
             <div>
               <h4
                 className="text-lg font-semibold mb-3"

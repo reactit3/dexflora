@@ -521,7 +521,7 @@ export function Base64Converter() {
 
         {/* Usage Guide */}
         <div
-          className="border rounded-2xl p-6 shadow-sm"
+          className="border rounded-2xl p-6 shadow-sm text-justify"
           style={{
             backgroundColor: "white",
             borderColor: "#e5e5e7",
