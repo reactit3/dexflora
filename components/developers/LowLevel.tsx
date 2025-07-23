@@ -174,9 +174,6 @@ export function LowLevel() {
                   ) : (
                     <>
                       <AlertCircle className="w-4 h-4 text-[#FF3B30]" />
-                      <span className="text-sm font-medium text-[#FF3B30]">
-                        Invalid hex format
-                      </span>
                     </>
                   )}
                 </div>
@@ -253,14 +250,17 @@ export function LowLevel() {
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div>
-                      <h3
+                      {/* <h3
                         className="text-lg font-semibold"
                         style={{ color: "var(--color-dark)" }}
                       >
-                        dApp Created Successfully!
-                      </h3>
-                      <p className="text-sm" style={{ color: "#8e8e93" }}>
-                        Deployed via {createdApp.provider.name}
+                        Deployed to be hosted
+                      </h3> */}
+                      <p
+                        className="text-lg font-semibold"
+                        style={{ color: "var(--color-dark)" }}
+                      >
+                        Hosted via {createdApp.provider.name}
                       </p>
                     </div>
                   </div>
@@ -272,7 +272,7 @@ export function LowLevel() {
                         className="block text-sm font-medium mb-2"
                         style={{ color: "var(--color-dark)" }}
                       >
-                        Application URL
+                        Endpoint
                       </label>
                       <div className="flex items-center gap-2">
                         <input
@@ -341,7 +341,7 @@ export function LowLevel() {
                           className="text-sm font-medium"
                           style={{ color: "var(--color-dark)" }}
                         >
-                          App ID
+                          UID
                         </p>
                         <p
                           className="text-sm font-mono"
@@ -355,10 +355,13 @@ export function LowLevel() {
                           className="text-sm font-medium"
                           style={{ color: "var(--color-dark)" }}
                         >
-                          Deployed At
+                          Queried At
                         </p>
                         <p className="text-sm" style={{ color: "#8e8e93" }}>
                           {new Date(createdApp.deployedAt).toLocaleString()}
+                        </p>
+                        <p className="text-xs" style={{ color: "#8e8e93" }}>
+                          All endpoints expire within 24 hours.
                         </p>
                       </div>
                     </div>
