@@ -112,7 +112,7 @@ export function LowLevel() {
             </h1>
           </div>
           <p className="text-[16px]" style={{ color: "#8e8e93" }}>
-            Create dApps for running low-level call interactions on
+            Query dApps for running low-level call interactions on
             EVM-compatible blockchains
           </p>
         </div>
