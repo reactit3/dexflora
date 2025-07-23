@@ -234,7 +234,7 @@ export function LowLevel() {
                 ) : (
                   <>
                     <Zap className="w-5 h-5" />
-                    <span>Create dApp</span>
+                    <span>Query</span>
                   </>
                 )}
               </button>
