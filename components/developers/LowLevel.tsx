@@ -401,9 +401,7 @@ export function LowLevel() {
 
         {/* Footer Info */}
         <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
-          <p>
-            Deploy smart contracts and interact with Ethereum using raw hex data
-          </p>
+          <p>Low-level calls</p>
         </div>
       </div>
     </div>
