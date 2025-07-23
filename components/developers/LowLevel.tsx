@@ -188,7 +188,7 @@ export function LowLevel() {
                   className="block text-[16px] font-medium"
                   style={{ color: "var(--color-dark)" }}
                 >
-                  Choose URL Provider
+                  Provider
                 </label>
                 <select
                   value={selectedProvider}
