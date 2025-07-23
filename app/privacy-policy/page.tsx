@@ -275,7 +275,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen p-4" style={{ backgroundColor: "#f5f5f7" }}>
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
+
         <div className="text-center mb-8">
           <h1
             className="text-[28px] sm:text-[32px] font-bold mb-4"
@@ -288,7 +288,6 @@ export default function PrivacyPolicyPage() {
           </p>
         </div>
 
-        {/* Legal Documents */}
         <div className="space-y-4">
           {sections.map((section) => {
             const Icon = section.icon;
@@ -360,7 +359,6 @@ export default function PrivacyPolicyPage() {
           })}
         </div>
 
-        {/* Footer */}
         <div className="mt-8 text-center">
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
@@ -371,7 +369,7 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
 
-        {/* Footer Info */}
+
         <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
           <p>Last updated: July 21, 2025</p>
         </div>

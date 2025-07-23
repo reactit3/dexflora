@@ -165,7 +165,7 @@ export function Base64Converter() {
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
+
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <h1
@@ -180,7 +180,7 @@ export function Base64Converter() {
           </p>
         </div>
 
-        {/* Base64 to Image Section */}
+
         <div
           className="border rounded-2xl p-6 mb-8 shadow-sm"
           style={{
@@ -319,7 +319,7 @@ export function Base64Converter() {
           </div>
         </div>
 
-        {/* Image to Base64 Section */}
+
         <div
           className="border rounded-2xl p-6 mb-8 shadow-sm"
           style={{
@@ -468,7 +468,7 @@ export function Base64Converter() {
           </div>
         </div>
 
-        {/* Quick Examples */}
+  
         <div
           className="border rounded-2xl p-6 mb-8 shadow-sm"
           style={{
@@ -516,7 +516,7 @@ export function Base64Converter() {
           </div>
         </div>
 
-        {/* Usage Guide */}
+
         <div
           className="border rounded-2xl p-6 shadow-sm text-justify"
           style={{
@@ -572,7 +572,7 @@ export function Base64Converter() {
           </div>
         </div>
 
-        {/* Footer Info */}
+  
         <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
           <p>
             Perfect for web developers working with embedded images and data

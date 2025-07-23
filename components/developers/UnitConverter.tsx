@@ -155,7 +155,7 @@ export function UnitConverter() {
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
+
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <h1
@@ -170,7 +170,7 @@ export function UnitConverter() {
           </p>
         </div>
 
-        {/* Main Converter */}
+
         <div
           className="border rounded-2xl p-6 mb-8 shadow-sm"
           style={{
@@ -179,7 +179,7 @@ export function UnitConverter() {
           }}
         >
           <div className="grid grid-cols-1 gap-6 relative">
-            {/* From Section */}
+    
             <div className="space-y-4">
               <label
                 className="block text-[16px] font-medium"
@@ -254,7 +254,7 @@ export function UnitConverter() {
               </div>
             </div>
 
-            {/* Swap Button */}
+ 
             <div className="flex items-center justify-center lg:hidden">
               <button
                 onClick={handleSwapUnits}
@@ -273,7 +273,7 @@ export function UnitConverter() {
               </button>
             </div>
 
-            {/* To Section */}
+
             <div className="space-y-4">
               <label
                 className="block text-[16px] font-medium"
@@ -343,7 +343,7 @@ export function UnitConverter() {
           </div>
         </div>
 
-        {/* Quick Conversions */}
+
         <div
           className="border rounded-2xl p-6 mb-8 shadow-sm"
           style={{
@@ -392,7 +392,7 @@ export function UnitConverter() {
           </div>
         </div>
 
-        {/* Unit Reference Table */}
+
         <div
           className="border rounded-2xl p-6 shadow-sm"
           style={{
@@ -460,7 +460,7 @@ export function UnitConverter() {
           </div>
         </div>
 
-        {/* Footer Info */}
+
         <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
           <p>
             Perfect for Ethereum developers working with smart contracts and gas

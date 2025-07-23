@@ -42,7 +42,6 @@ export function Footer() {
   return (
     <footer className="bg-white border-t border-gray-100 mt-16 relative ">
       <div className="  px-4 py-12">
-        {/* Brand Section */}
         <div>
           <div className="md:flex md:items-center md:justify-between">
             <Link href="/" className="inline-block mb-6">
@@ -51,7 +50,7 @@ export function Footer() {
               </h3>
             </Link>
 
-            {/* Social Links */}
+ 
             <div className="flex items-center gap-4 mb-6">
               {socialLinks.map((social) => (
                 <a
@@ -75,7 +74,7 @@ export function Footer() {
               enhance your development and testing experience.
             </p>
 
-            {/* Disclaimer */}
+     
             <p className="text-xs text-gray-600 leading-relaxed mb-6 text-justify">
               <strong>Disclaimer:</strong> Dexflora is an independent entity and
               is not partnered with, affiliated with, managed by BNB or BNB
@@ -85,9 +84,8 @@ export function Footer() {
             </p>
           </div>
         </div>
-        {/* Main Footer Content */}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {/* Footer Links Sections */}
           {navSections.map((section, sectionIndex) => (
             <div key={section.title} className="lg:col-span-1">
               <h4 className="text-gray-900 font-semibold text-sm mb-6 tracking-wide uppercase">
@@ -122,15 +120,15 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Bottom Section */}
+     
         <div className="pt-8 border-t border-gray-100">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* Copyright */}
+   
             <div className="text-gray-600 text-sm">
               © {new Date().getFullYear()} DEXFLORA. All rights reserved.
             </div>
 
-            {/* Status Indicator */}
+          
             <div className="flex items-center gap-2 text-sm">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-gray-600">All systems operational</span>
@@ -139,7 +137,7 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Mail  */}
+ 
       <a
         href="mailto:legal@dexflora.com"
         className="fixed bottom-12 right-4 bg-brand text-white hover:bg-[#2062E5] transition-all ease-in-out p-3 rounded-full cursor-pointer"

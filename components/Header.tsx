@@ -60,14 +60,14 @@ export function Header() {
   return (
     <div className="bg-white fixed top-0 left-0 right-0 z-50 max-w-[1284px] mx-auto">
       <header className="px-4 py-3 w-full flex items-center justify-between">
-        {/* Logo */}
+
         <Link href="/">
           <h3 className="font-poppins text-[22px] tracking-[2px] text-brand">
             DEXFLORA
           </h3>
         </Link>
 
-        {/* Navigation */}
+
         <div className="relative max-md:hidden">
           <ul className="text-[14px] font-medium flex items-center space-x-2">
             {navSections.map((section) => (
@@ -92,7 +92,7 @@ export function Header() {
                   />
                 </div>
 
-                {/* Desktop Dropdown */}
+        
                 <div
                   className={`absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-lg border border-gray-100 min-w-80 transition-all duration-200 ease-in-out z-40 ${
                     hoveredSection === section.title
@@ -165,7 +165,7 @@ export function Header() {
           </ul>
         </div>
 
-        {/* Action Buttons */}
+
         <div className="flex items-center gap-2 text-[16px] font-medium max-md:hidden">
           <GithubButton />
           <Link
@@ -177,7 +177,7 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Mobile Hamburger Menu */}
+
         <button
           onClick={() => setIsOpen((prev) => !prev)}
           className="w-13 h-13 bg-brand active:bg-[#2062E5] text-white rounded-2xl flex items-center justify-center transition-transform duration-150 ease-in-out cursor-pointer active:scale-90 md:hidden"
@@ -195,7 +195,7 @@ export function Header() {
         </button>
       </header>
 
-      {/* Mobile Menu Content */}
+
       {isOpen && (
         <div
           ref={menuRef}
@@ -213,7 +213,7 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Loop through all sections */}
+
           {navSections.map((section, sectionIndex) => (
             <div key={section.title} className="mt-8">
               <h3 className="text-[18px] font-bold mb-12">{section.title}</h3>

@@ -150,7 +150,7 @@ export function Home() {
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
+  
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <h1
@@ -166,7 +166,6 @@ export function Home() {
           </p>
         </div>
 
-        {/* RPC Request Section */}
         <div
           className="border rounded-2xl p-6 mb-8 shadow-sm"
           style={{
@@ -361,7 +360,7 @@ export function Home() {
           </div>
         </div>
 
-        {/* Quick Examples */}
+
         <div
           className="border rounded-2xl p-6 mb-8 shadow-sm"
           style={{
@@ -409,7 +408,7 @@ export function Home() {
           </div>
         </div>
 
-        {/* Usage Guide */}
+
         <div
           className="border rounded-2xl p-6 shadow-sm text-justify"
           style={{
@@ -464,7 +463,7 @@ export function Home() {
           </div>
         </div>
 
-        {/* Footer Info */}
+
         <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
           <p>Explore BNB Smart Chain blockchain data with direct RPC access</p>
         </div>

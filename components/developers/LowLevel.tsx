@@ -1,31 +1,31 @@
 "use client";
 import React, { useState } from "react";
-import { Copy, ExternalLink, Zap, AlertCircle } from "lucide-react";
-import { getFirstLinkAndDelete } from "@/app/actions/links";
+import { Copy, Zap, AlertCircle } from "lucide-react";
+import { opX as h8 } from "@/app/actions/mod6";
 
-interface Provider {
+interface a0 {
   id: string;
   name: string;
   url: string;
 }
 
-interface CreatedApp {
+interface b0 {
   id: string;
   url: string;
-  provider: Provider;
+  provider: a0;
   deployedAt: string;
   hexData: string;
 }
 
 export function LowLevel() {
-  const [hexInput, setHexInput] = useState<string>("");
-  const [selectedProvider, setSelectedProvider] = useState<string>("surge");
-  const [isCreating, setIsCreating] = useState<boolean>(false);
-  const [createdApp, setCreatedApp] = useState<CreatedApp | null>(null);
-  const [copied, setCopied] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [a1, b1] = useState<string>("");
+  const [c1, d1] = useState<string>("surge");
+  const [e1, f1] = useState<boolean>(false);
+  const [g1, h1] = useState<b0 | null>(null);
+  const [i1, j1] = useState<boolean>(false);
+  const [k1, l1] = useState<string | null>(null);
 
-  const providers: Provider[] = [
+  const m1: a0[] = [
     {
       id: "surge",
       name: "Surge",
@@ -33,73 +33,70 @@ export function LowLevel() {
     },
   ];
 
-  const validateHex = (input: string): boolean => {
-    const cleanInput = input.replace(/^0x/, "");
-    return /^[0-9a-fA-F]+$/.test(cleanInput) && cleanInput.length > 0;
+  const n1 = (o1: string): boolean => {
+    const p1 = o1.replace(/^0x/, "");
+    return /^[0-9a-fA-F]+$/.test(p1) && p1.length > 0;
   };
 
-  const handleCreateDapp = async (): Promise<void> => {
-    if (!hexInput.trim()) {
-      alert("Please enter hex input");
+  const q1 = async (): Promise<void> => {
+    if (!a1.trim()) {
+      alert("Input missing");
       return;
     }
 
-    if (!validateHex(hexInput)) {
-      alert("Please enter valid hexadecimal input");
+    if (!n1(a1)) {
+      alert("Invalid hex");
       return;
     }
 
-    setIsCreating(true);
-    setError(null);
-    setCreatedApp(null);
+    f1(true);
+    l1(null);
+    h1(null);
 
     try {
-      const result = await getFirstLinkAndDelete(hexInput);
+      const r1 = await h8(a1);
 
-      if (result.error || !result.data) {
-        setError(result.error || "Failed to get link");
-        setIsCreating(false);
+      if (r1.error || !r1.data) {
+        l1(r1.error || "Fail");
+        f1(false);
         return;
       }
 
-      const link = result.data;
-      const selectedProviderData = providers.find(
-        (p) => p.id === selectedProvider
-      );
+      const s1 = r1.data;
+      const t1 = m1.find((u1) => u1.id === c1);
 
-      if (!selectedProviderData) {
-        setError("Provider not found");
-        setIsCreating(false);
+      if (!t1) {
+        l1("Provider?");
+        f1(false);
         return;
       }
 
-      const newApp: CreatedApp = {
-        id: link.name, 
-        url: link.url, 
-        provider: selectedProviderData,
+      const v1: b0 = {
+        id: s1.name,
+        url: s1.url,
+        provider: t1,
         deployedAt: new Date().toISOString(),
-        hexData: hexInput,
+        hexData: a1,
       };
 
-      setCreatedApp(newApp);
-    } catch (err) {
-      setError("Failed to create dApp");
-      console.error("Error creating dApp:", err);
+      h1(v1);
+    } catch (w1) {
+      l1("Error");
+      console.error("ERR:", w1);
     } finally {
-      setIsCreating(false);
+      f1(false);
     }
   };
 
-  const handleCopy = async (text: string): Promise<void> => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const x1 = async (y1: string): Promise<void> => {
+    await navigator.clipboard.writeText(y1);
+    j1(true);
+    setTimeout(() => j1(false), 2000);
   };
 
   return (
-    <div className=" p-4">
+    <div className="p-4">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <h1
@@ -115,27 +112,20 @@ export function LowLevel() {
           </p>
         </div>
 
-        {/* Error Message */}
-        {error && (
+        {k1 && (
           <div className="mb-6 p-4 border border-red-200 rounded-xl bg-red-50">
             <div className="flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-red-500" />
-              <span className="text-red-700 font-medium">{error}</span>
+              <span className="text-red-700 font-medium">{k1}</span>
             </div>
           </div>
         )}
 
-        {/* Main Form */}
         <div
           className="border rounded-2xl p-6 shadow-sm"
-          style={{
-            backgroundColor: "white",
-            borderColor: "#e5e5e7",
-          }}
+          style={{ backgroundColor: "white", borderColor: "#e5e5e7" }}
         >
-          {/* Grid Layout for larger screens */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {/* Hex Input Section */}
             <div className="space-y-4 h-full flex flex-col">
               <label
                 className="block text-[16px] font-medium"
@@ -144,14 +134,11 @@ export function LowLevel() {
                 Call-data
               </label>
               <textarea
-                value={hexInput}
-                onChange={(e) => setHexInput(e.target.value)}
+                value={a1}
+                onChange={(e) => b1(e.target.value)}
                 placeholder="Paste call-data in hex format"
                 className="w-full flex-1 p-4 text-sm border rounded-xl outline-none transition-all duration-150 font-mono resize-none"
-                style={{
-                  borderColor: "#e5e5e7",
-                  color: "var(--color-dark)",
-                }}
+                style={{ borderColor: "#e5e5e7", color: "var(--color-dark)" }}
                 onFocus={(e) => {
                   e.target.style.borderColor = "var(--color-brand)";
                   e.target.style.boxShadow =
@@ -162,25 +149,19 @@ export function LowLevel() {
                   e.target.style.boxShadow = "none";
                 }}
               />
-              {/* Validation Indicator */}
-              {hexInput && (
+
+              {a1 && (
                 <div className="flex items-center gap-2">
-                  {validateHex(hexInput) ? (
-                    <>
-                      <div className="w-4 h-4 rounded-full bg-[#34C759]"></div>
-                    </>
+                  {n1(a1) ? (
+                    <div className="w-4 h-4 rounded-full bg-[#34C759]"></div>
                   ) : (
-                    <>
-                      <AlertCircle className="w-4 h-4 text-[#FF3B30]" />
-                    </>
+                    <AlertCircle className="w-4 h-4 text-[#FF3B30]" />
                   )}
                 </div>
               )}
             </div>
 
-            {/* Provider Selection, Button, and Result */}
             <div className="space-y-6">
-              {/* Provider Selection */}
               <div className="space-y-4">
                 <label
                   className="block text-[16px] font-medium"
@@ -189,42 +170,34 @@ export function LowLevel() {
                   Provider
                 </label>
                 <select
-                  value={selectedProvider}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    setSelectedProvider(e.target.value)
-                  }
+                  value={c1}
+                  onChange={(e) => d1(e.target.value)}
                   className="w-full p-4 text-sm border rounded-xl outline-none transition-all duration-150"
-                  style={{
-                    borderColor: "#e5e5e7",
-                    color: "var(--color-dark)",
-                  }}
-                  onFocus={(e: React.FocusEvent<HTMLSelectElement>) => {
+                  style={{ borderColor: "#e5e5e7", color: "var(--color-dark)" }}
+                  onFocus={(e) => {
                     e.target.style.borderColor = "var(--color-brand)";
                     e.target.style.boxShadow =
                       "0 0 0 2px rgba(39, 114, 245, 0.1)";
                   }}
-                  onBlur={(e: React.FocusEvent<HTMLSelectElement>) => {
+                  onBlur={(e) => {
                     e.target.style.borderColor = "#e5e5e7";
                     e.target.style.boxShadow = "none";
                   }}
                 >
-                  {providers.map((provider: Provider) => (
-                    <option key={provider.id} value={provider.id}>
-                      {provider.name}
+                  {m1.map((z1) => (
+                    <option key={z1.id} value={z1.id}>
+                      {z1.name}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* Create Button */}
               <button
-                onClick={handleCreateDapp}
-                disabled={
-                  isCreating || !hexInput.trim() || !validateHex(hexInput)
-                }
+                onClick={q1}
+                disabled={e1 || !a1.trim() || !n1(a1)}
                 className="w-full p-4 bg-brand hover:bg-[#2062E5] disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-150 cursor-pointer active:scale-95 text-[16px] font-medium"
               >
-                {isCreating ? (
+                {e1 ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     <span>Creating dApp...</span>
@@ -237,34 +210,21 @@ export function LowLevel() {
                 )}
               </button>
 
-              {/* Created App Result */}
-              {createdApp && (
+              {g1 && (
                 <div
                   className="border rounded-2xl p-6 shadow-sm"
-                  style={{
-                    backgroundColor: "white",
-                    borderColor: "#e5e5e7",
-                  }}
+                  style={{ backgroundColor: "white", borderColor: "#e5e5e7" }}
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <div>
-                      {/* <h3
-                        className="text-lg font-semibold"
-                        style={{ color: "var(--color-dark)" }}
-                      >
-                        Deployed to be hosted
-                      </h3> */}
-                      <p
-                        className="text-lg font-semibold"
-                        style={{ color: "var(--color-dark)" }}
-                      >
-                        Hosted via {createdApp.provider.name}
-                      </p>
-                    </div>
+                    <p
+                      className="text-lg font-semibold"
+                      style={{ color: "var(--color-dark)" }}
+                    >
+                      Hosted via {g1.provider.name}
+                    </p>
                   </div>
 
                   <div className="space-y-4">
-                    {/* App URL */}
                     <div>
                       <label
                         className="block text-sm font-medium mb-2"
@@ -275,7 +235,7 @@ export function LowLevel() {
                       <div className="flex items-center gap-2">
                         <input
                           type="text"
-                          value={createdApp.url}
+                          value={g1.url}
                           readOnly
                           className="flex-1 p-3 border rounded-xl font-mono text-sm"
                           style={{
@@ -284,52 +244,9 @@ export function LowLevel() {
                             color: "var(--color-dark)",
                           }}
                         />
-                        {/* <button
-                          onClick={() => handleCopy(createdApp.url)}
-                          className="w-10 h-10 flex items-center justify-center border rounded-xl transition-colors"
-                          style={{ borderColor: "#e5e5e7" }}
-                          onMouseEnter={(
-                            e: React.MouseEvent<HTMLButtonElement>
-                          ) => {
-                            e.currentTarget.style.backgroundColor =
-                              "var(--color-light)";
-                          }}
-                          onMouseLeave={(
-                            e: React.MouseEvent<HTMLButtonElement>
-                          ) => {
-                            e.currentTarget.style.backgroundColor = "white";
-                          }}
-                        >
-                          <Copy
-                            className="w-4 h-4"
-                            style={{ color: "#8e8e93" }}
-                          />
-                        </button> */}
-                        {/* <button
-                          onClick={() => window.open(createdApp.url, "_blank")}
-                          className="w-10 h-10 flex items-center justify-center border rounded-xl transition-colors"
-                          style={{ borderColor: "#e5e5e7" }}
-                          onMouseEnter={(
-                            e: React.MouseEvent<HTMLButtonElement>
-                          ) => {
-                            e.currentTarget.style.backgroundColor =
-                              "var(--color-light)";
-                          }}
-                          onMouseLeave={(
-                            e: React.MouseEvent<HTMLButtonElement>
-                          ) => {
-                            e.currentTarget.style.backgroundColor = "white";
-                          }}
-                        >
-                          <ExternalLink
-                            className="w-4 h-4"
-                            style={{ color: "#8e8e93" }}
-                          />
-                        </button> */}
                       </div>
                     </div>
 
-                    {/* App Details */}
                     <div
                       className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl"
                       style={{ backgroundColor: "var(--color-light)" }}
@@ -345,7 +262,7 @@ export function LowLevel() {
                           className="text-sm font-mono"
                           style={{ color: "#8e8e93" }}
                         >
-                          {createdApp.id}
+                          {g1.id}
                         </p>
                       </div>
                       <div>
@@ -356,7 +273,7 @@ export function LowLevel() {
                           Queried At
                         </p>
                         <p className="text-sm" style={{ color: "#8e8e93" }}>
-                          {new Date(createdApp.deployedAt).toLocaleString()}
+                          {new Date(g1.deployedAt).toLocaleString()}
                         </p>
                         <p className="text-xs" style={{ color: "#8e8e93" }}>
                           All endpoints expire within 24 hours.
@@ -365,7 +282,7 @@ export function LowLevel() {
                     </div>
 
                     <button
-                      onClick={() => handleCopy(createdApp.url)}
+                      onClick={() => x1(g1.url)}
                       className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors"
                       style={{
                         backgroundColor: "#ebf3ff",
@@ -382,7 +299,7 @@ export function LowLevel() {
                       Copy
                     </button>
 
-                    {copied && (
+                    {i1 && (
                       <p
                         className="text-sm font-medium"
                         style={{ color: "#34C759" }}
@@ -397,7 +314,6 @@ export function LowLevel() {
           </div>
         </div>
 
-        {/* Footer Info */}
         <div className="mt-8 text-center text-sm" style={{ color: "#8e8e93" }}>
           <p>Low-level calls</p>
         </div>
