@@ -143,7 +143,7 @@ export function LowLevel() {
                 className="block text-[16px] font-medium"
                 style={{ color: "var(--color-dark)" }}
               >
-                Call-data/Hex
+                Call-data
               </label>
               <textarea
                 value={hexInput}
