@@ -13,7 +13,7 @@ interface X1 {
 interface R<T> {
   data: T | null;
   error: string | null;
-}
+}   
 
 export async function opX(d1: string): Promise<R<X1>> {
   try {
