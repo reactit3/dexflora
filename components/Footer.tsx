@@ -42,20 +42,14 @@ export function Footer() {
   return (
     <footer className="bg-white border-t border-gray-100 mt-16 relative ">
       <div className="  px-4 py-12">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {/* Brand Section */}
-          <div className="lg:col-span-1">
+        {/* Brand Section */}
+        <div>
+          <div className="md:flex md:items-center md:justify-between">
             <Link href="/" className="inline-block mb-6">
-              <h3 className="font-poppins text-2xl tracking-wider text-brand font-bold">
+              <h3 className="font-poppins text-[22px] tracking-[2px] text-brand">
                 DEXFLORA
               </h3>
             </Link>
-            <p className="text-gray-600 text-sm leading-relaxed mb-6 text-justify">
-              A simple, browser-based platform for interacting with blockchain
-              JSON-RPC endpoints, complete with a suite of additional tools to
-              enhance your development and testing experience.
-            </p>
 
             {/* Social Links */}
             <div className="flex items-center gap-4 mb-6">
@@ -72,9 +66,17 @@ export function Footer() {
                 </a>
               ))}
             </div>
+          </div>
+
+          <div className="max-w-xl">
+            <p className="text-gray-600 text-sm leading-relaxed mb-6 text-justify">
+              A simple, browser-based platform for interacting with blockchain
+              JSON-RPC endpoints, complete with a suite of additional tools to
+              enhance your development and testing experience.
+            </p>
 
             {/* Disclaimer */}
-            <p className="text-xs text-gray-600 leading-relaxed text-justify">
+            <p className="text-xs text-gray-600 leading-relaxed mb-6 text-justify">
               <strong>Disclaimer:</strong> Dexflora is an independent entity and
               is not partnered with, affiliated with, managed by BNB or BNB
               Chain© in any way. Dexflora does not control or manage any
@@ -82,7 +84,9 @@ export function Footer() {
               on behalf of BNB or BNB Chain.
             </p>
           </div>
-
+        </div>
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {/* Footer Links Sections */}
           {navSections.map((section, sectionIndex) => (
             <div key={section.title} className="lg:col-span-1">
