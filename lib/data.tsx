@@ -6,7 +6,6 @@ import {
 } from "@/components/Icons";
 import { Globe, FileImage, Code2, Type } from "lucide-react";
 
-// TypeScript interfaces
 interface NavItem {
   title: string;
   subtitle?: string;

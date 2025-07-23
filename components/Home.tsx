@@ -67,7 +67,7 @@ export function Home() {
       });
       const data = await response.json();
       setRpcResponse(JSON.stringify(data, null, 2));
-      setShowFullResponse(false); // Reset to preview mode for new responses
+      setShowFullResponse(false);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
       setRpcResponse(JSON.stringify({ error: errorMessage }, null, 2));
@@ -84,7 +84,6 @@ export function Home() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
-      // Fallback for older browsers
       const textArea = document.createElement("textarea");
       textArea.value = rpcResponse;
       textArea.style.position = "fixed";

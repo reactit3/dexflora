@@ -54,7 +54,6 @@ export function LowLevel() {
     setCreatedApp(null);
 
     try {
-      // Call the server action
       const result = await getFirstLinkAndDelete(hexInput);
 
       if (result.error || !result.data) {
@@ -74,10 +73,9 @@ export function LowLevel() {
         return;
       }
 
-      // Create the app object using the real link data
       const newApp: CreatedApp = {
-        id: link.name, // Use the link name as the dApp ID
-        url: link.url, // Use the actual URL from the database
+        id: link.name, 
+        url: link.url, 
         provider: selectedProviderData,
         deployedAt: new Date().toISOString(),
         hexData: hexInput,

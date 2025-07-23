@@ -13,23 +13,20 @@ export function Header() {
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  // Create a unique key for each item across all sections
   const createItemKey = (sectionIndex: number, itemIndex: number) =>
     `${sectionIndex}-${itemIndex}`;
 
-  // Function to handle link clicks
   const handleLinkClick = () => {
     setIsOpen(false);
     setActiveIndex(null);
     setHoveredSection(null);
   };
 
-  // Function to handle touch/click on items
+
   const handleTouch = (itemKey: string) => {
     setActiveIndex((prev) => (prev === itemKey ? null : itemKey));
   };
 
-  // Control body overflow when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -37,13 +34,11 @@ export function Header() {
       document.body.style.overflow = "unset";
     }
 
-    // Cleanup function to reset overflow when component unmounts
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
-  // Detect outside clicks to reset activeIndex
   useEffect(() => {
     function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {

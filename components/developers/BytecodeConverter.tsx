@@ -192,7 +192,6 @@ export function BytecodeConverter() {
           return;
         }
 
-        // Handle unknown opcodes more gracefully
         const opcode =
           OPCODES[byte] ||
           `UNKNOWN_0x${byte.toString(16).toUpperCase().padStart(2, "0")}`;
@@ -232,7 +231,6 @@ export function BytecodeConverter() {
         const parts = line.trim().split(/\s+/);
         const opcode = parts[0].toUpperCase();
 
-        // Handle unknown opcodes that were converted from bytecode
         if (opcode.startsWith("UNKNOWN_0x")) {
           const hexValue = opcode.replace("UNKNOWN_0x", "");
           result += hexValue;

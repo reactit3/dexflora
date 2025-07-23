@@ -1,6 +1,6 @@
 let cachedData: { stars: number; forks: number } | null = null;
 let lastFetched = 0;
-const CACHE_DURATION = 1000 * 60 * 10; // 10 minutes
+const CACHE_DURATION = 1000 * 60 * 10; 
 
 export async function getGithubStats() {
   const now = Date.now();
@@ -15,7 +15,7 @@ export async function getGithubStats() {
       headers: {
         Accept: "application/vnd.github+json",
       },
-      next: { revalidate: CACHE_DURATION }, // optional, for ISR-like revalidation
+      next: { revalidate: CACHE_DURATION }, 
     }
   );
 

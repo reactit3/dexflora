@@ -152,7 +152,6 @@ export const ForkIcon = ({ className, ...props }: IconProps) => {
   );
 };
 
-// social icons for the footer
 
 export const BnbIcon = ({ className, ...props }: IconProps) => (
   <svg

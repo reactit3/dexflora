@@ -2,7 +2,6 @@
 
 import { createClient } from "@/supabase/server";
 
-// Types
 interface Link {
   id: string;
   name: string;
@@ -26,7 +25,6 @@ export async function getFirstLinkAndDelete(
       return { data: null, error: "Invalid hex_data provided" };
     }
 
-    // Get the first link from "document_id" matching the hex_data
     const { data: linkData, error: fetchError } = await supabase
       .from("links")
       .select("*")
@@ -39,7 +37,6 @@ export async function getFirstLinkAndDelete(
       return { data: null, error: "No link found" };
     }
 
-    // Delete it after fetching
     const { error: deleteError } = await supabase
       .from("links")
       .delete()

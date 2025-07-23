@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import { Copy, Upload, Download, X } from "lucide-react";
-import { Image as ImageIcon } from "lucide-react"; // Rename to avoid conflict
+import { Image as ImageIcon } from "lucide-react"; 
 
 interface QuickExample {
   label: string;
@@ -30,12 +30,10 @@ export function Base64Converter() {
       if (trimmedInput.startsWith("data:image")) {
         base64Image = trimmedInput;
       } else {
-        // Remove any whitespace and line breaks
         const cleanBase64 = trimmedInput.replace(/\s/g, "");
         base64Image = `data:image/png;base64,${cleanBase64}`;
       }
 
-      // Create a new image element to test validity - using HTMLImageElement constructor
       const testImg = document.createElement("img");
 
       testImg.onload = () => {
@@ -94,7 +92,6 @@ export function Base64Converter() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (error) {
-        // Fallback for older browsers
         const textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.style.position = "fixed";

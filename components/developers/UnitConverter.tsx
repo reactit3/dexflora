@@ -24,7 +24,6 @@ export function UnitConverter() {
   const [result, setResult] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
 
-  // Wei conversion factors
   const weiConversions: WeiConversions = {
     wei: "1",
     kwei: "1000",
@@ -53,7 +52,7 @@ export function UnitConverter() {
     tether: "Tether",
   };
 
-  // Convert between units with full precision
+
   const convertUnits = (value: string, from: string, to: string): string => {
     if (!value || isNaN(Number(value))) return "";
 
@@ -64,11 +63,10 @@ export function UnitConverter() {
       const fromWei = parseFloat(weiConversions[from]);
       const toWei = parseFloat(weiConversions[to]);
 
-      // Calculate the conversion factor
+     
       const conversionFactor = fromWei / toWei;
       const result = inputNum * conversionFactor;
 
-      // Handle very large numbers
       if (result >= 1e15) {
         return result.toLocaleString("en-US", {
           maximumFractionDigits: 0,
@@ -76,29 +74,29 @@ export function UnitConverter() {
         });
       }
 
-      // Handle very small numbers - show full decimal representation
+     
       if (result < 1 && result > 0) {
-        // Convert to string and handle precision
+     
         let resultStr = result.toString();
 
-        // If it's in scientific notation, convert to decimal
+   
         if (resultStr.includes("e")) {
           const [base, exponent] = resultStr.split("e");
           const exp = parseInt(exponent);
           const baseNum = parseFloat(base);
 
           if (exp < 0) {
-            // For negative exponents, create decimal string
+      
             const decimalPlaces =
               Math.abs(exp) + (base.split(".")[1]?.length || 0);
             resultStr = baseNum.toFixed(decimalPlaces);
           } else {
-            // For positive exponents, multiply out
+        
             resultStr = (baseNum * Math.pow(10, exp)).toString();
           }
         }
 
-        // Remove trailing zeros after decimal point
+    
         if (resultStr.includes(".")) {
           resultStr = resultStr.replace(/\.?0+$/, "");
         }
@@ -106,11 +104,11 @@ export function UnitConverter() {
         return resultStr;
       }
 
-      // Handle regular numbers
+
       if (result % 1 === 0) {
         return result.toString();
       } else {
-        // For decimal numbers, show reasonable precision
+
         const precision = result < 1 ? 18 : 8;
         return parseFloat(result.toPrecision(precision)).toString();
       }
