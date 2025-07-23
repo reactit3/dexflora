@@ -68,7 +68,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="max-w-xl">
+          <div>
             <p className="text-gray-600 text-sm leading-relaxed mb-6 text-justify">
               A simple, browser-based platform for interacting with blockchain
               JSON-RPC endpoints, complete with a suite of additional tools to
