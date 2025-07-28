@@ -35,11 +35,6 @@ export async function opX(d1: string): Promise<R<X1>> {
       return { data: null, error: "Not found" };
     }
 
-    const { error: e2 } = await sb.from("links").delete().eq("id", x.id);
-
-    if (e2) {
-      return { data: null, error: "Delete failed" };
-    }
 
     return { data: x, error: null };
   } catch {
